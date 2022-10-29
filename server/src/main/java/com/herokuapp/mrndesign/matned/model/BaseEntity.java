@@ -1,13 +1,12 @@
-package com.herokuapp.mrndesign.matned.model.audit;
+package com.herokuapp.mrndesign.matned.model;
 
-import com.herokuapp.mrndesign.matned.model.security.User;
 import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 @MappedSuperclass
-public abstract class BaseEntity extends AbstractAuditable<User, Long> {
+public abstract class BaseEntity extends AbstractAuditable<Voter, Long> {
 
     @Version
     private Long version;

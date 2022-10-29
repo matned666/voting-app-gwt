@@ -3,10 +3,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
+  <parent>
+    <groupId>com.herokuapp.mrndesign.matned</groupId>
+    <artifactId>voting-multimodule-app</artifactId> <!-- lookup parent from repository -->
+    <version>${revision}</version>
+  </parent>
   <groupId>com.herokuapp.mrndesign.matned.client</groupId>
   <artifactId>voting-app-view</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>${project.version}</version>
   <packaging>gwt-app</packaging>
   <name>voting-app-view</name>
   <description>View client module</description>
@@ -25,12 +29,6 @@
       <timezone>+1</timezone>
     </developer>
   </developers>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -56,17 +54,17 @@
     <dependency>
       <groupId>org.jboss.gwt.elemento</groupId>
       <artifactId>elemento-core</artifactId>
-      <version>0.9.1-gwt2</version>
+      <version>${elemento-core.version}</version>
     </dependency>
     <dependency>
       <groupId>com.intendia.gwt.rxgwt2</groupId>
       <artifactId>rxgwt</artifactId>
-      <version>2.2</version>
+      <version>${rxgwt.version}</version>
     </dependency>
     <dependency>
       <groupId>com.intendia.gwt</groupId>
       <artifactId>rxjava2-gwt</artifactId>
-      <version>2.2.10-gwt1</version>
+      <version>${rxjava2-gwt.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

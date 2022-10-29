@@ -1,9 +1,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <properties>
+<!--    Main variables -->
+    <project.version>ONWELO-1.0</project.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+<!--    Server variables -->
+    <spring.version>2.7.5</spring.version>
+    <postgresql.version>42.5.0</postgresql.version>
+    <h2.version>2.1.214</h2.version>
+    <mysql.connector.version>8.0.31</mysql.connector.version>
+    <passay.version>1.0</passay.version>
+    <guava.version>30.0-jre</guava.version>
+    <gson.version>2.8.5</gson.version>
+    <assertj-core.version>3.23.1</assertj-core.version>
+    <wiremock-standalone.version>2.26.3</wiremock-standalone.version>
+    <mockito-core.version>3.5.10</mockito-core.version>
+    <pitest.version>1.5.2</pitest.version>
+    <spring-security-test.version>5.7.4</spring-security-test.version>
+<!--     View variables -->
+    <elemento-core.version>0.9.1-gwt2</elemento-core.version>
+    <rxgwt.version>2.2</rxgwt.version>
+    <rxjava2-gwt.version>${rxgwt.version}.10-gwt1</rxjava2-gwt.version>
+  </properties>
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.herokuapp.mrndesign.matned</groupId>
   <artifactId>voting-multimodule-app</artifactId>
-  <version>ORWELO-1.0</version>
+  <version>${revision}</version>
   <packaging>pom</packaging>
   <modules>
     <module>view</module>

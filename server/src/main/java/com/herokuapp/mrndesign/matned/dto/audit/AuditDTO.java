@@ -1,7 +1,13 @@
 package com.herokuapp.mrndesign.matned.dto.audit;
 
+import com.herokuapp.mrndesign.matned.model.audit.AuditInterface;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
+
+import static com.herokuapp.mrndesign.matned.Patterns.DATE_TIME_FORMATTER;
 
 public class AuditDTO implements Serializable {
 
@@ -11,6 +17,18 @@ public class AuditDTO implements Serializable {
     private String createdDate;
     private Long lastModifiedById;
     private String lastModifiedDate;
+
+    public static AuditDTO apply(AuditInterface entity){
+        return new AuditDTO.AuditBuilder()
+                .id(entity.getId())
+                .version(entity.getVersion())
+                .createdById(entity.getCreatedBy().map(AbstractPersistable::getId).orElse(0L))
+                .createdDate(entity.getCreatedDate().map(x->x.format(DATE_TIME_FORMATTER)).orElse(LocalDateTime.now().format(DATE_TIME_FORMATTER)))
+                .lastModifiedById(entity.getLastModifiedBy().map(AbstractPersistable::getId).orElse(0L))
+                .lastModifiedDate(entity.getLastModifiedDate().map(x->x.format(DATE_TIME_FORMATTER)).orElse(LocalDateTime.now().format(DATE_TIME_FORMATTER)))
+                .build();
+    }
+
 
     private AuditDTO(AuditBuilder builder){
         this.id = builder.id;
