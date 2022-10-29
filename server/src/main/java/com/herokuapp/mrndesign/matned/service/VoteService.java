@@ -11,7 +11,6 @@ import com.herokuapp.mrndesign.matned.repository.VoterRepository;
 import com.herokuapp.mrndesign.matned.service.exception.CandidateNotFoundException;
 import com.herokuapp.mrndesign.matned.service.exception.VoteGivenException;
 import com.herokuapp.mrndesign.matned.service.exception.VoterNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +29,6 @@ public class VoteService {
         this.voteRepository = voteRepository;
     }
 
-    @Autowired
     public VoteDTO vote(Long candidateId, Long voterId) {
         if (voteRepository.isVoteGiven(voterId)) {
             throw new VoteGivenException();
@@ -51,7 +49,7 @@ public class VoteService {
     }
 
     public CandidateDTO voterVote(Long voterId) {
-        return voteRepository.findByVoter(voterId);
+        return CandidateDTO.apply(voteRepository.findByVoter(voterId).orElseThrow(CandidateNotFoundException::new));
     }
 
     public void deleteVote(Long voteId) {
@@ -59,9 +57,7 @@ public class VoteService {
     }
 
     List<VoteDTO> convertVotesToDTOList(List<Vote> all) {
-        return all.stream()
-                .map(VoteDTO::apply)
-                .collect(Collectors.toList());
+        return all.stream().map(VoteDTO::apply).collect(Collectors.toList());
     }
 
 }
