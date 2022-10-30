@@ -15,11 +15,12 @@ import java.util.Map;
 
 public class ScreenWidget extends Composite implements Screen {
 
+    private VerticalPanel grid = new VerticalPanel();
     private final HorizontalPanel mainGrid;
     private final Map<ContentType, MenuButton> buttonsMap = new HashMap<>();
     protected ContentManager screenManager;
     protected Content content;
-    private VerticalPanel menuPanel;
+    private HorizontalPanel menuPanel;
 
     public ScreenWidget(ContentManager screenManager, Content initContent) {
         this.screenManager = screenManager;
@@ -28,12 +29,13 @@ public class ScreenWidget extends Composite implements Screen {
         mainGrid.getElement().setClassName("menu-bar left");
         initButtons();
         mainGrid.add(menuPanel);
-        mainGrid.add(content.getWidget());
-        initWidget(mainGrid);
+        grid.add(mainGrid);
+        grid.add(content.getWidget());
+        initWidget(grid);
     }
 
     private void initButtons() {
-        menuPanel = new VerticalPanel();
+        menuPanel = new HorizontalPanel();
         menuPanel.getElement().setClassName("menu-bar buttons-bar");
         for (ContentType contentType : ContentType.values()) {
             MenuButton button = contentType.getButton(screenManager);
@@ -47,9 +49,9 @@ public class ScreenWidget extends Composite implements Screen {
 
     @Override
     public void setContent(Content content) {
-        mainGrid.remove(this.content.getWidget());
+        grid.remove(this.content.getWidget());
         this.content = content;
-        mainGrid.add(this.content.getWidget());
+        grid.add(this.content.getWidget());
     }
 
     @Override

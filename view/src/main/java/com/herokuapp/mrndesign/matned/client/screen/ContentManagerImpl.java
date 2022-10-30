@@ -1,10 +1,12 @@
 package com.herokuapp.mrndesign.matned.client.screen;
 
 import com.google.gwt.user.client.ui.RootPanel;
+import com.herokuapp.mrndesign.matned.client.model.Model;
+import com.herokuapp.mrndesign.matned.client.model.ModelImpl;
 import com.herokuapp.mrndesign.matned.client.screen.content.AboutContent;
 import com.herokuapp.mrndesign.matned.client.screen.content.ContactContent;
 import com.herokuapp.mrndesign.matned.client.screen.content.Content;
-import com.herokuapp.mrndesign.matned.client.screen.content.VoteContent;
+import com.herokuapp.mrndesign.matned.client.screen.content.vote.content.VoteContent;
 import com.herokuapp.mrndesign.matned.client.screen.widget.ScreenWidget;
 
 import java.util.HashMap;
@@ -17,9 +19,11 @@ public class ContentManagerImpl implements ContentManager {
 
     private final Map<ContentType, Content> contentMapByType = new HashMap<>();
     private final Screen screen;
+    private final Content initContent;
 
     public ContentManagerImpl() {
-        Content initContent = new VoteContent();
+        Model model = new ModelImpl();
+        initContent = new VoteContent(model);
         contentMapByType.put(ContentType.VOTE, initContent);
         screen = new ScreenWidget(this, initContent);
     }
@@ -46,9 +50,12 @@ public class ContentManagerImpl implements ContentManager {
 
     private Content createNewContent(ContentType contentType) {
         switch (contentType) {
-            case ABOUT: return new AboutContent();
-            case CONTACT: return new ContactContent();
-            default: return new VoteContent();
+            case ABOUT:
+                return new AboutContent();
+            case CONTACT:
+                return new ContactContent();
+            default:
+                return initContent;
         }
     }
 

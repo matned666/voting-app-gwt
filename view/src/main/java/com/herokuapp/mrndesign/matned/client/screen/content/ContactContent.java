@@ -1,7 +1,6 @@
 package com.herokuapp.mrndesign.matned.client.screen.content;
 
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.herokuapp.mrndesign.matned.client.screen.ContentType;
 
@@ -14,10 +13,9 @@ public class ContactContent extends BaseContent {
     }
 
     private void initTitle(){
-        Label title = new Label();
-        title.setText("CONTACT SCREEN");
-        title.getElement().setClassName("title");
-        this.add(title);
+        HTML html = new HTML();
+        html.setHTML("<h3>Contact information</h3>");
+        add(html);
     }
 
     private void initDescription(){

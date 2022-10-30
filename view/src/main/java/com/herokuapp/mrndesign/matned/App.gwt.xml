@@ -1,5 +1,5 @@
 <module>
-    <inherits name="com.google.gwt.voter.User"/>
+    <inherits name="com.google.gwt.user.User"/>
     <inherits name="com.intendia.rxgwt2.RxElemento"/>
     <inherits name="org.jboss.gwt.elemento.Core"/>
     <entry-point class="com.herokuapp.mrndesign.matned.client.App"/>
