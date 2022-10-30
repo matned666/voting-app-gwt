@@ -1,33 +1,30 @@
 package com.herokuapp.mrndesign.matned.dto;
 
-import com.herokuapp.mrndesign.matned.dto.audit.AuditDTO;
 import com.herokuapp.mrndesign.matned.model.Candidate;
-import com.herokuapp.mrndesign.matned.model.Vote;
 import com.herokuapp.mrndesign.matned.model.Voter;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CandidateDTO {
 
+    private Long id;
+
     private Long voterId;
 
     private List<Long> listOfVotesIds;
 
-    private AuditDTO auditDTO;
-
     public static CandidateDTO apply(Candidate entity) {
         CandidateDTO dto = new CandidateDTO(entity.getVoter().getId(),
-                entity.getVotes()
+                entity.getVoters()
                         .stream()
-                        .map(AbstractPersistable::getId)
+                        .map(Voter::getId)
                         .collect(Collectors.toList()));
-        dto.auditDTO = AuditDTO.apply(entity);
+        dto.id = entity.getId();
         return dto;
     }
 
-    public static Candidate applyNew(Voter v, List<Vote> votes) {
+    public static Candidate applyNew(Voter v, List<Voter> votes) {
         return new Candidate(v, votes);
     }
 
@@ -55,7 +52,7 @@ public class CandidateDTO {
         this.listOfVotesIds = listOfVotesIds;
     }
 
-    public AuditDTO getAuditDTO() {
-        return auditDTO;
+    public Long getId() {
+        return id;
     }
 }

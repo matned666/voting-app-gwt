@@ -1,34 +1,32 @@
 package com.herokuapp.mrndesign.matned.model;
 
-import com.herokuapp.mrndesign.matned.model.audit.AuditInterface;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "CANDIDATE_ENTITY")
-public class Candidate extends BaseEntity implements AuditInterface {
+public class Candidate {
 
-    public static final String ROLE_NOT_FOUND = "Role not found";
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne
     private Voter voter;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Vote> votes;
+    private List<Voter> voters;
 
     public Candidate() {
     }
 
-    public Candidate(Voter voter, List<Vote> votes) {
+    public Candidate(Voter voter, List<Voter> voters) {
         this.voter = voter;
-        this.votes = votes;
+        this.voters = voters;
     }
 
-    public List<Vote> getVotes() {
-        return votes;
+    public List<Voter> getVoters() {
+        return voters;
     }
 
     public Voter getVoter() {
@@ -37,6 +35,10 @@ public class Candidate extends BaseEntity implements AuditInterface {
 
     public void setVoter(Voter voter) {
         this.voter = voter;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
 

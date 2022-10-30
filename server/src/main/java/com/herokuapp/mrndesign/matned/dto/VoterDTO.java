@@ -1,18 +1,17 @@
 package com.herokuapp.mrndesign.matned.dto;
 
-import com.herokuapp.mrndesign.matned.dto.audit.AuditDTO;
 import com.herokuapp.mrndesign.matned.model.Voter;
 
 public class VoterDTO {
 
+    private Long id;
     private String name;
     private String surname;
 
-    private AuditDTO auditDTO;
 
     public static VoterDTO apply(Voter voter) {
         VoterDTO dto = new VoterDTO(voter.getName(), voter.getSurname());
-        dto.auditDTO = AuditDTO.apply(voter);
+        dto.id = voter.getId();
         return dto;
     }
 
@@ -44,8 +43,7 @@ public class VoterDTO {
         this.surname = surname;
     }
 
-    public AuditDTO getAuditDTO() {
-        return auditDTO;
+    public Long getId() {
+        return id;
     }
-
 }

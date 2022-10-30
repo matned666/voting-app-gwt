@@ -1,20 +1,16 @@
 package com.herokuapp.mrndesign.matned.model;
 
-import com.herokuapp.mrndesign.matned.dto.VoterDTO;
-import com.herokuapp.mrndesign.matned.model.audit.AuditInterface;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "VOTER_ENTITY")
-public class Voter extends BaseEntity implements AuditInterface {
+public class Voter {
 
     public static final String ROLE_NOT_FOUND = "Role not found";
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
     private String surname;
@@ -43,5 +39,8 @@ public class Voter extends BaseEntity implements AuditInterface {
         this.surname = surname;
     }
 
+    public Long getId() {
+        return id;
+    }
 }
 
