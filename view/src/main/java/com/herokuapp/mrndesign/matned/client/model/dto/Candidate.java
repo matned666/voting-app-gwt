@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Mirror View object for CandidateDTO on a server side
+ */
 public class Candidate implements Serializable {
 
     private Long id;
     private Long voterId;
     private List<Long> listOfVotesIds;
-
-    public static Candidate apply(CandidateJS js) {
-        return new Candidate(js.getId(), js.getVoterId(), js.getListOfVotesIds());
-    }
 
     public Candidate() {
     }

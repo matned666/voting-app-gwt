@@ -2,6 +2,9 @@ package com.herokuapp.mrndesign.matned.client.screen;
 
 import com.herokuapp.mrndesign.matned.client.screen.widget.MenuButtonWidget;
 
+/**
+ * Content type displayed on a screen
+ */
 public enum ContentType {
     VOTE("VOTE"),
     ABOUT("ABOUT ME"),

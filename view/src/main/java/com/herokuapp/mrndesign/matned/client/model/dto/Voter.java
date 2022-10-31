@@ -3,15 +3,14 @@ package com.herokuapp.mrndesign.matned.client.model.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Mirror View object for VoterDTO on a server side
+ */
 public class Voter implements Serializable {
 
     private Long id;
     private String name;
     private String surname;
-
-    public static Voter apply(VoterJS js) {
-        return new Voter(js.getId(), js.getName(), js.getSurname());
-    }
 
     public Voter() {
     }
