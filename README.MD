@@ -21,4 +21,4 @@ Currently, the app works on H2 database.</br>
 
 ### Made by matned
 
-![alt text](https://github.com/matned666/voting-app-gwt/blob/master/img.png?raw=true)
+![alt text](https://github.com/matned666/voting-app-gwt/blob/master/Animation.gif?raw=true)
