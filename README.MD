@@ -6,14 +6,10 @@ Simple application connecting GWT on front and Spring Server <br>
 Connection between the two frameworks will be done by http requests <br>
 
 ## Running app
-
-Instructions how to run the application
-
-`mvn gwt:devmode -f pom.xml` in folder with view's pom<br>
-com.herokuapp.mrndesign.matned.AppStarter for server
-
 ### Server
-
+com.herokuapp.mrndesign.matned.AppStarter for server
 ### View
 
-TODO - some bugs in server connection.
+`mvn gwt:devmode -f pom.xml` in folder with view's pom<br>
+and then in a browser go to
+http://localhost:8888/com.herokuapp.mrndesign.matned.App
