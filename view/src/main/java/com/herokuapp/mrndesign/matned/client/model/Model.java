@@ -32,4 +32,12 @@ public interface Model {
     void removeVoter(Voter voter);
 
     void removeCandidate(Candidate candidate);
+
+    void onSaveVoterResultReceive(Voter voter);
+
+    void onGetVotersResultReceive(List<Voter> voters);
+
+    void onGetCandidatesResultReceive(List<Candidate> candidates);
+
+    void onCandidateSaveResultReceive(Candidate candidate);
 }

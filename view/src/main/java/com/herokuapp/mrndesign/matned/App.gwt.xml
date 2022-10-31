@@ -1,4 +1,5 @@
 <module>
+    <inherits name="com.google.gwt.json.JSON"/>
     <inherits name="com.google.gwt.user.User"/>
     <inherits name="com.intendia.rxgwt2.RxElemento"/>
     <inherits name="org.jboss.gwt.elemento.Core"/>

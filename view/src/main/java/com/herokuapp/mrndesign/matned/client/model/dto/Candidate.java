@@ -1,22 +1,28 @@
 package com.herokuapp.mrndesign.matned.client.model.dto;
 
-import com.herokuapp.mrndesign.matned.client.model.dto.audit.AuditDTO;
-
 import java.util.List;
 import java.util.Objects;
 
 public class Candidate implements Listable {
 
+    private Long id;
     private Long voterId;
-
     private List<Long> listOfVotesIds;
 
-    private AuditDTO auditDTO;
+    public static Candidate apply(CandidateJS js) {
+        return new Candidate(js.getId(), js.getVoterId(), js.getListOfVotesIds());
+    }
 
     public Candidate() {
     }
 
     public Candidate(Long voterId, List<Long> listOfVotesIds) {
+        this.voterId = voterId;
+        this.listOfVotesIds = listOfVotesIds;
+    }
+
+    public Candidate(Long id, Long voterId, List<Long> listOfVotesIds) {
+        this.id = id;
         this.voterId = voterId;
         this.listOfVotesIds = listOfVotesIds;
     }
@@ -37,13 +43,13 @@ public class Candidate implements Listable {
         this.listOfVotesIds = listOfVotesIds;
     }
 
-    public AuditDTO getAuditDTO() {
-        return auditDTO;
-    }
-
     @Override
     public Long getId() {
-        return voterId;
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
@@ -51,11 +57,11 @@ public class Candidate implements Listable {
         if (this == o) return true;
         if (!(o instanceof Candidate)) return false;
         Candidate candidate = (Candidate) o;
-        return Objects.equals(voterId, candidate.voterId) && Objects.equals(listOfVotesIds, candidate.listOfVotesIds) && Objects.equals(auditDTO, candidate.auditDTO);
+        return Objects.equals(id, candidate.id) && Objects.equals(voterId, candidate.voterId) && Objects.equals(listOfVotesIds, candidate.listOfVotesIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(voterId, listOfVotesIds, auditDTO);
+        return Objects.hash(id, voterId, listOfVotesIds);
     }
 }

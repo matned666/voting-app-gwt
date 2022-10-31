@@ -105,7 +105,9 @@ public class VotersPanel extends DataGrid<Voter> implements DataGridObserver {
             }
         };
         candidateColumn.setFieldUpdater((index, voter, value) -> {
-            Candidate c = new Candidate(voter.getId(), new ArrayList<>());
+            Candidate c = new Candidate();
+            c.setVoterId(voter.getId());
+            c.setListOfVotesIds(new ArrayList<>());
             model.saveCandidate(c);
         });
         addColumn(candidateColumn, "Be candidate");

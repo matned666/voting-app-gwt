@@ -43,4 +43,8 @@ public class VoteObserver {
         }
         return !model.hasVoted(selectedVoter.getId());
     }
+
+    public void vote() {
+        selectedCandidate.getListOfVotesIds().add(selectedVoter.getId());
+    }
 }

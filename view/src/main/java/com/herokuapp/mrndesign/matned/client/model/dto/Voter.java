@@ -8,6 +8,10 @@ public class Voter implements Listable {
     private String name;
     private String surname;
 
+    public static Voter apply(VoterJS js) {
+        return new Voter(js.getId(), js.getName(), js.getSurname());
+    }
+
     public Voter() {
     }
 
@@ -58,5 +62,13 @@ public class Voter implements Listable {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, surname);
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"name\":" + "\"" + name + "\"" +
+                ",\"surname\":" + "\"" + surname + "\"" +
+                '}';
     }
 }

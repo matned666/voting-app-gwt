@@ -4,12 +4,11 @@ import com.herokuapp.mrndesign.matned.dto.CandidateDTO;
 import com.herokuapp.mrndesign.matned.dto.VoterDTO;
 import com.herokuapp.mrndesign.matned.service.CandidateService;
 import com.herokuapp.mrndesign.matned.service.VoterService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class AppController {
 
     private final VoterService voterService;
@@ -46,19 +45,18 @@ public class AppController {
     }
 
     @PostMapping(value = "/giveVote/{voterId}/{candidateId}")
-    public CandidateDTO giveVote(@PathVariable Long voterId, @PathVariable Long candidateId) {
-        return voterService.vote(candidateId, voterId);
+    public void giveVote(@PathVariable Long voterId, @PathVariable Long candidateId) {
+        voterService.vote(candidateId, voterId);
     }
 
-    @DeleteMapping(value = "voter/{voterId}")
+    @DeleteMapping(value = "/voter/{voterId}")
     public void deleteVoter(@PathVariable Long voterId) {
         voterService.deleteVoter(voterId);
     }
 
-    @DeleteMapping(value = "candidate/{candidateId}")
+    @DeleteMapping(value = "/candidate/{candidateId}")
     public void deleteCandidate(@PathVariable Long candidateId) {
         voterService.deleteVoter(candidateId);
     }
-
 
 }

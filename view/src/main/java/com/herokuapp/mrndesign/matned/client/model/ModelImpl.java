@@ -3,13 +3,14 @@ package com.herokuapp.mrndesign.matned.client.model;
 import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
 import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
 import com.herokuapp.mrndesign.matned.client.model.http.HttpRequester;
-import com.herokuapp.mrndesign.matned.client.model.http.HttpRequesterMock;
+import com.herokuapp.mrndesign.matned.client.model.http.HttpRequesterImpl;
 import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VoteObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VotePossibilityObserver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class ModelImpl implements Model {
@@ -24,10 +25,11 @@ public class ModelImpl implements Model {
 
 
     public ModelImpl() {
-        requester = new HttpRequesterMock(this); // for view testing purposes
-//        requester = new HttpRequesterImpl(this);
-        voterList = new ArrayList<>(requester.getVoters());
-        candidateList = new ArrayList<>(requester.getCandidates());
+        requester = new HttpRequesterImpl(this);
+        voterList = new ArrayList<>();
+        candidateList = new ArrayList<>();
+        requester.requestVoters();
+        requester.requestCandidates();
         voteObserver = new VoteObserver(this);
     }
 
@@ -38,19 +40,17 @@ public class ModelImpl implements Model {
 
     @Override
     public List<Candidate> getAllCandidates() {
-        logger.info("candidates:" + candidateList.size());
         return candidateList;
     }
 
     @Override
     public boolean hasVoted(Long id) {
-        return requester.hasVoted(id);
+        return candidateList.stream().flatMap(c -> c.getListOfVotesIds().stream()).anyMatch(vID -> Objects.equals(vID, id));
     }
 
     @Override
     public void saveVoter(Voter voter) {
-        voterList.add(requester.saveVoter(voter));
-        refreshData();
+        requester.saveVoter(voter);
     }
 
     @Override
@@ -58,9 +58,7 @@ public class ModelImpl implements Model {
         if (candidateList.contains(candidate)) {
             return;
         }
-        Candidate c = requester.saveCandidate(candidate);
-        candidateList.add(c);
-        refreshData();
+        requester.saveCandidate(candidate);
     }
 
     private void refreshData() {
@@ -92,6 +90,8 @@ public class ModelImpl implements Model {
     public void vote(Candidate candidate) {
         voteObserver.setSelectedCandidate(candidate);
         requester.vote(voteObserver);
+        voteObserver.vote();
+        notifyVotePossibility(false);
         refreshData();
     }
 
@@ -106,6 +106,32 @@ public class ModelImpl implements Model {
     public void removeCandidate(Candidate candidate) {
         requester.removeCandidate(candidate);
         candidateList.remove(candidate);
+        refreshData();
+    }
+
+    @Override
+    public void onSaveVoterResultReceive(Voter voter) {
+        voterList.add(voter);
+        refreshData();
+    }
+
+    @Override
+    public void onGetVotersResultReceive(List<Voter> voters) {
+        voterList.clear();
+        voterList.addAll(voters);
+        refreshData();
+    }
+
+    @Override
+    public void onGetCandidatesResultReceive(List<Candidate> candidates) {
+        candidateList.clear();
+        candidateList.addAll(candidates);
+        refreshData();
+    }
+
+    @Override
+    public void onCandidateSaveResultReceive(Candidate candidate) {
+        candidateList.add(candidate);
         refreshData();
     }
 

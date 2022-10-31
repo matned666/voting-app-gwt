@@ -36,7 +36,9 @@ public class AddVoterPanel extends DecoratorPanel {
         }
         String name = nameTextBox.getText();
         String surname = surnameTextBox.getText();
-        Voter voter = new Voter(name, surname);
+        Voter voter = new Voter();
+        voter.setName(name);
+        voter.setSurname(surname);
         model.saveVoter(voter);
         nameTextBox.setText("");
         surnameTextBox.setText("");
