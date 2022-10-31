@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class ModelImpl implements Model {
     private static final Logger logger = java.util.logging.Logger.getLogger("ModelImpl");
@@ -22,7 +23,6 @@ public class ModelImpl implements Model {
     private final VoteObserver voteObserver;
     private final List<VotePossibilityObserver> votePossibilityObservers = new ArrayList<>();
     private final List<DataGridObserver> dataGrids = new ArrayList<>();
-
 
     public ModelImpl() {
         requester = new HttpRequesterImpl(this);
@@ -97,6 +97,13 @@ public class ModelImpl implements Model {
 
     @Override
     public void removeVoter(Voter voter) {
+        List<Candidate> candidatesToRemove = candidateList.stream()
+                .filter(c -> Objects.equals(c.getVoterId(), voter.getId()))
+                .collect(Collectors.toList());
+        if (!candidatesToRemove.isEmpty()) {
+            candidatesToRemove.forEach(this::removeCandidate);
+            return;
+        }
         requester.removeVoter(voter);
         voterList.remove(voter);
         refreshData();
