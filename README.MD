@@ -17,6 +17,8 @@ com.herokuapp.mrndesign.matned.AppStarter for server
 and then in a browser go to
 http://localhost:8888/com.herokuapp.mrndesign.matned.App
 
-Currently the app works on H2 database.</br>
+Currently, the app works on H2 database.</br>
 
 ### Made by matned
+
+![alt text](https://github.com/matned666/voting-app-gwt/blob/master/img.png?raw=true)
