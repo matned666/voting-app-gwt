@@ -31,8 +31,7 @@ public class CandidateService {
 
     public CandidateDTO add(Long voterId) {
         Voter v = voterRepository.findById(voterId).orElseThrow(VoterNotFoundException::new);
-        List<Voter> votes = new ArrayList<>();
-        return CandidateDTO.apply(candidateRepository.save(CandidateDTO.applyNew(v, votes)));
+        return CandidateDTO.apply(candidateRepository.save(CandidateDTO.applyNew(v, new ArrayList<>())));
     }
 
     public void deleteCandidate(Long id) {

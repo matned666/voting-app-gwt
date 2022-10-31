@@ -24,7 +24,7 @@ public class AppController {
         return voterService.findAll();
     }
 
-    @GetMapping(value = "/candidate")
+    @GetMapping(value = "/candidates")
     public List<CandidateDTO> getAllCandidates() {
         return candidateService.findAll();
     }
