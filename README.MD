@@ -9,7 +9,11 @@ Connection between the two frameworks will be done by http requests <br>
 
 Instructions how to run the application
 
+`mvn gwt:devmode -f pom.xml` in folder with view's pom<br>
+com.herokuapp.mrndesign.matned.AppStarter for server
+
 ### Server
 
 ### View
-    
+
+TODO - some bugs in server connection.
