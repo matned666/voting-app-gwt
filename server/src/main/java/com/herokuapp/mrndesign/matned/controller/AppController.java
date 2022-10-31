@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Main server controller
+ */
 @RestController
 public class AppController {
 
@@ -19,41 +22,71 @@ public class AppController {
         this.candidateService = candidateService;
     }
 
+    /**
+     * @return all voters as {@link VoterDTO} List
+     */
     @GetMapping(value = "/voters")
     public List<VoterDTO> getAllVoters() {
         return voterService.findAll();
     }
 
+    /**
+     * @return all candidates as {@link CandidateDTO} List
+     */
     @GetMapping(value = "/candidates")
     public List<CandidateDTO> getAllCandidates() {
         return candidateService.findAll();
     }
 
-    @GetMapping(value = "/voters/{voterId}")
-    public VoterDTO getAllVoters(@PathVariable Long voterId) {
-        return voterService.findById(voterId);
-    }
-
+    /**
+     * Saves {@link com.herokuapp.mrndesign.matned.model.Voter} given in request body
+     *
+     * @param voterDTO dto
+     * @return saved voter taken from repository
+     */
     @PostMapping(value = "/voters")
-    public VoterDTO saveNewVoter(@RequestBody VoterDTO voterDTO) {
+    public VoterDTO saveVoter(@RequestBody VoterDTO voterDTO) {
         return voterService.add(voterDTO);
     }
 
+    /**
+     * Saves new {@link com.herokuapp.mrndesign.matned.model.Candidate} by given Voter Id
+     * The saved Candidate has empty votes list
+     *
+     * @param voterId Voter id
+     * @return saved voter taken from repository
+     */
     @PostMapping(value = "/candidates/{voterId}")
     public CandidateDTO saveNewCandidate(@PathVariable Long voterId) {
         return candidateService.add(voterId);
     }
 
+    /**
+     * Vote by voter on candidate
+     *
+     * @param voterId
+     * @param candidateId
+     */
     @PostMapping(value = "/giveVote/{voterId}/{candidateId}")
-    public void giveVote(@PathVariable Long voterId, @PathVariable Long candidateId) {
+    public void vote(@PathVariable Long voterId, @PathVariable Long candidateId) {
         voterService.vote(candidateId, voterId);
     }
 
+    /**
+     * Removes {@link com.herokuapp.mrndesign.matned.model.Voter} by its UUID
+     *
+     * @param voterId
+     */
     @DeleteMapping(value = "/voter/{voterId}")
     public void deleteVoter(@PathVariable Long voterId) {
         voterService.deleteVoter(voterId);
     }
 
+    /**
+     * Removes {@link com.herokuapp.mrndesign.matned.model.Candidate} by its UUID
+     *
+     * @param candidateId
+     */
     @DeleteMapping(value = "/candidate/{candidateId}")
     public void deleteCandidate(@PathVariable Long candidateId) {
         candidateService.deleteCandidate(candidateId);
