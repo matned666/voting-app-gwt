@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-
-public class HttpRequesterImpl implements HttpRequester {
+/**
+ * Http requests handler - special for GWT framework
+ */
+public class HttpRequesterImpl implements Requester {
     private static final Logger logger = java.util.logging.Logger.getLogger("HttpRequesterImpl");
 
     private final Model model;

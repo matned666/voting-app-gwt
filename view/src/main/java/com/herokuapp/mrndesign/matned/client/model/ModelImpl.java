@@ -2,8 +2,8 @@ package com.herokuapp.mrndesign.matned.client.model;
 
 import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
 import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
-import com.herokuapp.mrndesign.matned.client.model.http.HttpRequester;
 import com.herokuapp.mrndesign.matned.client.model.http.HttpRequesterImpl;
+import com.herokuapp.mrndesign.matned.client.model.http.Requester;
 import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VoteObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VotePossibilityObserver;
@@ -19,7 +19,7 @@ public class ModelImpl implements Model {
 
     private final List<Voter> voterList;
     private final List<Candidate> candidateList;
-    private final HttpRequester requester;
+    private final Requester requester;
     private final VoteObserver voteObserver;
     private final List<VotePossibilityObserver> votePossibilityObservers = new ArrayList<>();
     private final List<DataGridObserver> dataGrids = new ArrayList<>();
