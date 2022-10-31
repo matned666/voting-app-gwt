@@ -14,7 +14,7 @@ public class Candidate {
     @OneToOne
     private Voter voter;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Voter> voters;
 
     public Candidate() {

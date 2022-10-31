@@ -33,11 +33,11 @@ public interface Model {
 
     void removeCandidate(Candidate candidate);
 
-    void onSaveVoterResultReceive(Voter voter);
+    void onSaveVoterResultCallback(Voter voter);
 
-    void onGetVotersResultReceive(List<Voter> voters);
+    void onGetVotersResultCallback(List<Voter> voters);
 
-    void onGetCandidatesResultReceive(List<Candidate> candidates);
+    void onGetCandidatesResultCallback(List<Candidate> candidates);
 
-    void onCandidateSaveResultReceive(Candidate candidate);
+    void onCandidateSaveResultCallback(Candidate candidate);
 }

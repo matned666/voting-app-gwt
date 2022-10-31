@@ -38,7 +38,7 @@ public class HttpRequesterImpl implements HttpRequester {
                     Long id = (long) v.get("id").isNumber().doubleValue();
                     String name = v.get("name").isString().stringValue();
                     String surname = v.get("surname").isString().stringValue();
-                    model.onSaveVoterResultReceive(new Voter(id, name, surname));
+                    model.onSaveVoterResultCallback(new Voter(id, name, surname));
                 }
 
                 @Override
@@ -55,6 +55,8 @@ public class HttpRequesterImpl implements HttpRequester {
     public void vote(VoteObserver voteObserver) {
         String url = "http://localhost:8080/giveVote/" + voteObserver.getSelectedVoter().getId() + "/" + voteObserver.getSelectedCandidate().getId();
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, url);
+        requestBuilder.setHeader("Content-Type", "application/json; charset=utf8");
+        requestBuilder.setHeader("Accept", "application/json");
         try {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
@@ -75,6 +77,8 @@ public class HttpRequesterImpl implements HttpRequester {
     @Override
     public void requestVoters() {
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, "http://localhost:8080/voters");
+        requestBuilder.setHeader("Content-Type", "application/json; charset=utf8");
+        requestBuilder.setHeader("Accept", "application/json");
         try {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
@@ -91,7 +95,7 @@ public class HttpRequesterImpl implements HttpRequester {
                         logger.info("RESPONSE:" + id + " " + name + " " + surname);
                         voters.add(e);
                     }
-                    model.onGetVotersResultReceive(voters);
+                    model.onGetVotersResultCallback(voters);
                 }
 
                 @Override
@@ -106,6 +110,8 @@ public class HttpRequesterImpl implements HttpRequester {
     @Override
     public void requestCandidates() {
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, "http://localhost:8080/candidates");
+        requestBuilder.setHeader("Content-Type", "application/json; charset=utf8");
+        requestBuilder.setHeader("Accept", "application/json");
         try {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
@@ -124,7 +130,7 @@ public class HttpRequesterImpl implements HttpRequester {
                         }
                         candidates.add(new Candidate(id, voterId, votes));
                     }
-                    model.onGetCandidatesResultReceive(candidates);
+                    model.onGetCandidatesResultCallback(candidates);
                 }
 
                 @Override
@@ -154,7 +160,7 @@ public class HttpRequesterImpl implements HttpRequester {
                     for (int j = 0; j < vts.size(); j++) {
                         votes.add((long) vts.get(j).isNumber().doubleValue());
                     }
-                    model.onCandidateSaveResultReceive(new Candidate(id, voterId, votes));
+                    model.onCandidateSaveResultCallback(new Candidate(id, voterId, votes));
                 }
 
                 @Override
@@ -170,6 +176,8 @@ public class HttpRequesterImpl implements HttpRequester {
     @Override
     public void removeVoter(Voter voter) {
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.DELETE, "http://localhost:8080/voter/" + voter.getId());
+        requestBuilder.setHeader("Content-Type", "application/json; charset=utf8");
+        requestBuilder.setHeader("Accept", "application/json");
         try {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
@@ -190,6 +198,8 @@ public class HttpRequesterImpl implements HttpRequester {
     @Override
     public void removeCandidate(Candidate candidate) {
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.DELETE, "http://localhost:8080/candidate/" + candidate.getId());
+        requestBuilder.setHeader("Content-Type", "application/json; charset=utf8");
+        requestBuilder.setHeader("Accept", "application/json");
         try {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override

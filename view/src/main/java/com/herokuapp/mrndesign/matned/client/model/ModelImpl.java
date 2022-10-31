@@ -110,27 +110,27 @@ public class ModelImpl implements Model {
     }
 
     @Override
-    public void onSaveVoterResultReceive(Voter voter) {
+    public void onSaveVoterResultCallback(Voter voter) {
         voterList.add(voter);
         refreshData();
     }
 
     @Override
-    public void onGetVotersResultReceive(List<Voter> voters) {
+    public void onGetVotersResultCallback(List<Voter> voters) {
         voterList.clear();
         voterList.addAll(voters);
         refreshData();
     }
 
     @Override
-    public void onGetCandidatesResultReceive(List<Candidate> candidates) {
+    public void onGetCandidatesResultCallback(List<Candidate> candidates) {
         candidateList.clear();
         candidateList.addAll(candidates);
         refreshData();
     }
 
     @Override
-    public void onCandidateSaveResultReceive(Candidate candidate) {
+    public void onCandidateSaveResultCallback(Candidate candidate) {
         candidateList.add(candidate);
         refreshData();
     }

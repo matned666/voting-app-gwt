@@ -12,4 +12,5 @@ public class SecurityConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**").allowedMethods("*");
     }
+
 }

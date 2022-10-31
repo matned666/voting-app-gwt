@@ -29,12 +29,13 @@ public class CandidateService {
 
     public CandidateDTO findById(Long id) {return CandidateDTO.apply(candidateRepository.findById(id).orElseThrow(VoterNotFoundException::new));}
 
-    public CandidateDTO add(Long voterId){
+    public CandidateDTO add(Long voterId) {
         Voter v = voterRepository.findById(voterId).orElseThrow(VoterNotFoundException::new);
         List<Voter> votes = new ArrayList<>();
         return CandidateDTO.apply(candidateRepository.save(CandidateDTO.applyNew(v, votes)));
     }
-    public void deleteUser(Long id) {
+
+    public void deleteCandidate(Long id) {
         candidateRepository.deleteById(id);
     }
 

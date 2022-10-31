@@ -56,7 +56,7 @@ public class AppController {
 
     @DeleteMapping(value = "/candidate/{candidateId}")
     public void deleteCandidate(@PathVariable Long candidateId) {
-        voterService.deleteVoter(candidateId);
+        candidateService.deleteCandidate(candidateId);
     }
 
 }

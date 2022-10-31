@@ -1,8 +1,9 @@
 package com.herokuapp.mrndesign.matned.client.model.dto;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Voter implements Listable {
+public class Voter implements Serializable {
 
     private Long id;
     private String name;
@@ -46,7 +47,6 @@ public class Voter implements Listable {
         this.id = id;
     }
 
-    @Override
     public Long getId() {
         return id;
     }
