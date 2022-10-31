@@ -1,6 +1,5 @@
 package com.herokuapp.mrndesign.matned.service;
 
-import com.herokuapp.mrndesign.matned.dto.CandidateDTO;
 import com.herokuapp.mrndesign.matned.dto.VoterDTO;
 import com.herokuapp.mrndesign.matned.model.Candidate;
 import com.herokuapp.mrndesign.matned.model.Voter;
@@ -49,7 +48,7 @@ public class VoterService {
         Voter voter = voterRepository.findById(voterId).orElseThrow(VoterNotFoundException::new);
         Candidate candidate = candidateRepository.findById(candidateDTO).orElseThrow(CandidateNotFoundException::new);
         candidate.getVoters().add(voter);
-        CandidateDTO.apply(candidateRepository.save(candidate));
+        candidateRepository.saveAndFlush(candidate);
     }
 
     public Boolean hasVoted(Long voterId) {

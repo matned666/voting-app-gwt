@@ -1,6 +1,7 @@
 package com.herokuapp.mrndesign.matned.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,11 +12,11 @@ public class Candidate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Voter voter;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    private List<Voter> voters;
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private List<Voter> voters = new ArrayList<>();
 
     public Candidate() {
     }
