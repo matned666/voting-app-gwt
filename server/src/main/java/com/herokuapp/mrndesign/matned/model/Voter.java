@@ -1,8 +1,5 @@
 package com.herokuapp.mrndesign.matned.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +15,6 @@ public class Voter {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "voters")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Candidate vote;
 
     public Voter() {
