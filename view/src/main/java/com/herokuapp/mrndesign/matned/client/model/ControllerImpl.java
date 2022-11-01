@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class ModelImpl implements Model {
+public class ControllerImpl implements Controller {
     private static final Logger logger = java.util.logging.Logger.getLogger("ModelImpl");
 
     private final List<Voter> voterList;
@@ -26,7 +26,7 @@ public class ModelImpl implements Model {
     private final List<DataGridObserver> dataGrids = new ArrayList<>();
     private Screen screen;
 
-    public ModelImpl() {
+    public ControllerImpl() {
         requester = new HttpRequesterImpl(this);
         voterList = new ArrayList<>();
         candidateList = new ArrayList<>();

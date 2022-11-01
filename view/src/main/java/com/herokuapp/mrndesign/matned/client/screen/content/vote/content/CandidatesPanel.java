@@ -6,7 +6,7 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.view.client.ListDataProvider;
-import com.herokuapp.mrndesign.matned.client.model.Model;
+import com.herokuapp.mrndesign.matned.client.model.Controller;
 import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
 import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
 import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
@@ -20,23 +20,23 @@ import java.util.stream.Collectors;
 public class CandidatesPanel extends DataGrid<Candidate> implements DataGridObserver {
     private static final Logger logger = java.util.logging.Logger.getLogger("CandidatesPanel");
 
-    private final Model model;
+    private final Controller controller;
     private final ListDataProvider<Candidate> dataProvider;
 
 
-    public CandidatesPanel(Model model) {
-        this.model = model;
+    public CandidatesPanel(Controller controller) {
+        this.controller = controller;
         setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
         initColumns();
         initData();
         setWidth("600px");
         setHeight("500px");
-        model.addDataGridObserver(this);
+        controller.addDataGridObserver(this);
         logger.info("Candidates panel created");
         getElement().getStyle().setCursor(com.google.gwt.dom.client.Style.Cursor.POINTER);
         dataProvider = new ListDataProvider<>();
         dataProvider.addDataDisplay(this);
-        dataProvider.getList().addAll(model.getAllCandidates());
+        dataProvider.getList().addAll(controller.getAllCandidates());
     }
 
     private void initColumns() {
@@ -50,7 +50,7 @@ public class CandidatesPanel extends DataGrid<Candidate> implements DataGridObse
         TextColumn<Candidate> nameColumn = new TextColumn<>() {
             @Override
             public String getValue(Candidate candidateDTO) {
-                Voter voter = model.getAllVoters()
+                Voter voter = controller.getAllVoters()
                         .stream()
                         .filter(v -> Objects.equals(v.getId(), candidateDTO.getVoterId()))
                         .findFirst()
@@ -74,13 +74,13 @@ public class CandidatesPanel extends DataGrid<Candidate> implements DataGridObse
     }
 
     private void initVoteButtonColumn() {
-        Column<Candidate, String> voteOnCandidateColumn = new Column<>(new ObservingButtonCell(model)) {
+        Column<Candidate, String> voteOnCandidateColumn = new Column<>(new ObservingButtonCell(controller)) {
             @Override
             public String getValue(Candidate candidate) {
                 return "Vote";
             }
         };
-        voteOnCandidateColumn.setFieldUpdater((index, candidate, value) -> model.vote(candidate));
+        voteOnCandidateColumn.setFieldUpdater((index, candidate, value) -> controller.vote(candidate));
         addColumn(voteOnCandidateColumn, "Vote");
     }
 
@@ -91,13 +91,13 @@ public class CandidatesPanel extends DataGrid<Candidate> implements DataGridObse
                 return "x";
             }
         };
-        deleteColumn.setFieldUpdater((index, candidate, value) -> model.removeCandidate(candidate));
+        deleteColumn.setFieldUpdater((index, candidate, value) -> controller.removeCandidate(candidate));
 
         addColumn(deleteColumn, "Remove");
     }
 
     private void initData() {
-        List<Candidate> candidates = model.getAllCandidates();
+        List<Candidate> candidates = controller.getAllCandidates();
         setRowCount(candidates.size(), true);
         setRowData(0, candidates);
     }
@@ -105,7 +105,7 @@ public class CandidatesPanel extends DataGrid<Candidate> implements DataGridObse
     @Override
     public void onDataChange() {
         List<Candidate> list = dataProvider.getList();
-        List<Candidate> actualData = model.getAllCandidates();
+        List<Candidate> actualData = controller.getAllCandidates();
         if (list.size() != actualData.size()) {
             List<Candidate> difference = actualData.stream()
                     .filter(v -> !list.contains(v))
@@ -126,8 +126,8 @@ public class CandidatesPanel extends DataGrid<Candidate> implements DataGridObse
 
         private boolean enabled;
 
-        public ObservingButtonCell(Model model) {
-            model.addVotePossibilityObserver(this);
+        public ObservingButtonCell(Controller controller) {
+            controller.addVotePossibilityObserver(this);
         }
 
         @Override

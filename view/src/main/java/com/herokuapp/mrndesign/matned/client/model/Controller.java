@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Model interface responsible for connection between frontend and backend
  */
-public interface Model {
+public interface Controller {
 
     /**
      * Gets all {@link Voter} from repository
@@ -65,14 +65,14 @@ public interface Model {
     void notifyVotePossibility(boolean legal);
 
     /**
-     * Adds dataGrid to the observation list {@link ModelImpl#dataGrids}
+     * Adds dataGrid to the observation list {@link ControllerImpl#dataGrids}
      *
      * @param dataGrid {@link DataGridObserver} interface
      */
     void addDataGridObserver(DataGridObserver dataGrid);
 
     /**
-     * Adds frontend element to the observation list {@link ModelImpl#votePossibilityObservers}
+     * Adds frontend element to the observation list {@link ControllerImpl#votePossibilityObservers}
      *
      * @param v {@link VotePossibilityObserver} interface
      */

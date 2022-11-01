@@ -8,7 +8,7 @@ import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
-import com.herokuapp.mrndesign.matned.client.model.Model;
+import com.herokuapp.mrndesign.matned.client.model.Controller;
 import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
 import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
 import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
@@ -22,21 +22,21 @@ import java.util.stream.Collectors;
 public class VotersPanel extends DataGrid<Voter> implements DataGridObserver {
     private final ListDataProvider<Voter> dataProvider;
     Logger logger = java.util.logging.Logger.getLogger("VotersPanel");
-    private final Model model;
+    private final Controller controller;
 
-    public VotersPanel(Model model) {
-        this.model = model;
+    public VotersPanel(Controller controller) {
+        this.controller = controller;
         setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
         initSelectionModel();
         initColumns();
         initData();
         setWidth("600px");
         setHeight("500px");
-        model.addDataGridObserver(this);
+        controller.addDataGridObserver(this);
         getElement().getStyle().setCursor(com.google.gwt.dom.client.Style.Cursor.POINTER);
         dataProvider = new ListDataProvider<>();
         dataProvider.addDataDisplay(this);
-        dataProvider.getList().addAll(model.getAllVoters());
+        dataProvider.getList().addAll(controller.getAllVoters());
     }
 
     private void initSelectionModel() {
@@ -45,7 +45,7 @@ public class VotersPanel extends DataGrid<Voter> implements DataGridObserver {
         selectionModel.addSelectionChangeHandler(event -> {
             Voter selected = selectionModel.getSelectedObject();
             if (selected != null) {
-                model.setSelectedVoter(selected);
+                controller.setSelectedVoter(selected);
             }
         });
     }
@@ -64,7 +64,7 @@ public class VotersPanel extends DataGrid<Voter> implements DataGridObserver {
                 return "x";
             }
         };
-        deleteColumn.setFieldUpdater((index, voter, value) -> model.removeVoter(voter));
+        deleteColumn.setFieldUpdater((index, voter, value) -> controller.removeVoter(voter));
         addColumn(deleteColumn, "Remove");
     }
 
@@ -82,7 +82,7 @@ public class VotersPanel extends DataGrid<Voter> implements DataGridObserver {
         TextColumn<Voter> voteColumn = new TextColumn<>() {
             @Override
             public String getValue(Voter voter) {
-                return model.hasVoted(voter.getId()) ? "VOTED" : null;
+                return controller.hasVoted(voter.getId()) ? "VOTED" : null;
             }
         };
 
@@ -108,17 +108,17 @@ public class VotersPanel extends DataGrid<Voter> implements DataGridObserver {
             Candidate c = new Candidate();
             c.setVoterId(voter.getId());
             c.setListOfVotesIds(new ArrayList<>());
-            model.saveCandidate(c);
+            controller.saveCandidate(c);
         });
         addColumn(candidateColumn, "Be candidate");
     }
 
     private boolean isCandidate(Voter candidate) {
-        return model.getAllCandidates().stream().anyMatch(c -> Objects.equals(c.getVoterId(), candidate.getId()));
+        return controller.getAllCandidates().stream().anyMatch(c -> Objects.equals(c.getVoterId(), candidate.getId()));
     }
 
     private void initData() {
-        List<Voter> voters = model.getAllVoters();
+        List<Voter> voters = controller.getAllVoters();
         setRowCount(voters.size(), true);
         setRowData(0, voters);
         logger.info("voters:" + voters.size());
@@ -127,7 +127,7 @@ public class VotersPanel extends DataGrid<Voter> implements DataGridObserver {
     @Override
     public void onDataChange() {
         List<Voter> list = dataProvider.getList();
-        List<Voter> actualData = model.getAllVoters();
+        List<Voter> actualData = controller.getAllVoters();
         if (list.size() != actualData.size()) {
             List<Voter> difference = actualData.stream()
                     .filter(v -> !list.contains(v))

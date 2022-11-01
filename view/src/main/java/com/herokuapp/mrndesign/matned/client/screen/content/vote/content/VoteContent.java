@@ -3,20 +3,20 @@ package com.herokuapp.mrndesign.matned.client.screen.content.vote.content;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.herokuapp.mrndesign.matned.client.model.Model;
+import com.herokuapp.mrndesign.matned.client.model.Controller;
 import com.herokuapp.mrndesign.matned.client.screen.ContentType;
 import com.herokuapp.mrndesign.matned.client.screen.content.BaseContent;
 
 public class VoteContent extends BaseContent {
 
-    private final Model model;
+    private final Controller controller;
 
-    public VoteContent(Model model) {
+    public VoteContent(Controller controller) {
         super(ContentType.VOTE);
-        this.model = model;
+        this.controller = controller;
         initDescription();
         initHorizontalPanel();
-        add(new AddVoterPanel(model));
+        add(new AddVoterPanel(controller));
         getElement().setClassName("content");
     }
 
@@ -28,8 +28,8 @@ public class VoteContent extends BaseContent {
 
     private void initHorizontalPanel() {
         HorizontalPanel horizontalPanel = new HorizontalPanel();
-        horizontalPanel.add(new VotersPanel(model));
-        horizontalPanel.add(new CandidatesPanel(model));
+        horizontalPanel.add(new VotersPanel(controller));
+        horizontalPanel.add(new CandidatesPanel(controller));
         add(horizontalPanel);
     }
 
