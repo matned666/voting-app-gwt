@@ -40,10 +40,12 @@ public class HttpRequesterImpl implements Requester {
                     Long id = (long) v.get("id").isNumber().doubleValue();
                     String name = v.get("name").isString().stringValue();
                     String surname = v.get("surname").isString().stringValue();
+                    logger.info("RESPONSE:" + id + " " + name + " " + surname);
                     model.onSaveVoterResultCallback(new Voter(id, name, surname));
                 }
                 @Override
                 public void onError(Request request, Throwable exception) {
+                    model.onServerError("Save voter error");
                 }
             });
         } catch (RequestException e) {
@@ -61,12 +63,12 @@ public class HttpRequesterImpl implements Requester {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
+                    logger.info("VOTE GIVEN");
 
                 }
-
                 @Override
                 public void onError(Request request, Throwable exception) {
-
+                    model.onServerError("Vote error");
                 }
             });
         } catch (RequestException e) {
@@ -100,6 +102,7 @@ public class HttpRequesterImpl implements Requester {
 
                 @Override
                 public void onError(Request request, Throwable exception) {
+                    model.onServerError("Get all voters error");
                 }
             });
         } catch (RequestException e) {
@@ -128,6 +131,7 @@ public class HttpRequesterImpl implements Requester {
                         for (int j = 0; j < vts.size(); j++) {
                             votes.add((long) vts.get(j).isNumber().doubleValue());
                         }
+                        logger.info("RESPONSE:" + id);
                         candidates.add(new Candidate(id, voterId, votes));
                     }
                     model.onGetCandidatesResultCallback(candidates);
@@ -135,6 +139,7 @@ public class HttpRequesterImpl implements Requester {
 
                 @Override
                 public void onError(Request request, Throwable exception) {
+                    model.onServerError("Get all candidates error");
                 }
             });
         } catch (RequestException e) {
@@ -160,11 +165,13 @@ public class HttpRequesterImpl implements Requester {
                     for (int j = 0; j < vts.size(); j++) {
                         votes.add((long) vts.get(j).isNumber().doubleValue());
                     }
+                    logger.info("RESPONSE:" + id);
                     model.onCandidateSaveResultCallback(new Candidate(id, voterId, votes));
                 }
 
                 @Override
                 public void onError(Request request, Throwable exception) {
+                    model.onServerError("Save candidate error");
                 }
             });
         } catch (RequestException e) {
@@ -187,7 +194,7 @@ public class HttpRequesterImpl implements Requester {
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    model.onServerError("");
+                    model.onServerError("Removing voter error");
                 }
             });
         } catch (RequestException e) {

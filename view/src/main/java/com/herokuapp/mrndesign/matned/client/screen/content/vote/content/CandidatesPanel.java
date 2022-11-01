@@ -106,7 +106,6 @@ public class CandidatesPanel extends DataGrid<Candidate> implements DataGridObse
     public void onDataChange() {
         List<Candidate> list = dataProvider.getList();
         List<Candidate> actualData = model.getAllCandidates();
-        logger.info("sad" + list.size() + " " + actualData.size());
         if (list.size() != actualData.size()) {
             List<Candidate> difference = actualData.stream()
                     .filter(v -> !list.contains(v))
