@@ -9,7 +9,7 @@ import com.herokuapp.mrndesign.matned.client.screen.Screen;
 import java.util.List;
 
 /**
- * Model interface responsible for connection between frontend and backend
+ * Controller interface responsible for connection between frontend and backend
  */
 public interface Controller {
 
