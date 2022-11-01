@@ -125,4 +125,14 @@ public interface Model {
      * @param candidate {@link Candidate}
      */
     void onCandidateSaveResultCallback(Candidate candidate);
+
+    /**
+     * Requester result callback
+     */
+    void onRemoveCallback();
+
+    /**
+     * Server error callback
+     */
+    void onServerError(String s);
 }

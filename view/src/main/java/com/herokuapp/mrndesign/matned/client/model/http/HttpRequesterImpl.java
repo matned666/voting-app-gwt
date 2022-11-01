@@ -184,12 +184,12 @@ public class HttpRequesterImpl implements Requester {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
-
+                    model.onRemoveCallback();
                 }
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-
+                    model.onServerError("");
                 }
             });
         } catch (RequestException e) {
@@ -206,12 +206,12 @@ public class HttpRequesterImpl implements Requester {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
-
+                    model.onRemoveCallback();
                 }
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-
+                    model.onServerError("Removing candidate server error");
                 }
             });
         } catch (RequestException e) {

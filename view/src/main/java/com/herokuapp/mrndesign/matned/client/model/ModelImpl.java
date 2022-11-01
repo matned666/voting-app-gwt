@@ -62,6 +62,7 @@ public class ModelImpl implements Model {
     }
 
     private void refreshData() {
+        notifyVotePossibility(voteObserver.isVoteLegal());
         dataGrids.forEach(DataGridObserver::onDataChange);
     }
 
@@ -91,7 +92,6 @@ public class ModelImpl implements Model {
         voteObserver.setSelectedCandidate(candidate);
         requester.vote(voteObserver);
         voteObserver.vote();
-        notifyVotePossibility(false);
         refreshData();
     }
 
@@ -139,6 +139,11 @@ public class ModelImpl implements Model {
     @Override
     public void onCandidateSaveResultCallback(Candidate candidate) {
         candidateList.add(candidate);
+        refreshData();
+    }
+
+    @Override
+    public void onRemoveCallback() {
         refreshData();
     }
 
