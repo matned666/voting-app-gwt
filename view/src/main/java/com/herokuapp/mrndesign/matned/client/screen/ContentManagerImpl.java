@@ -1,8 +1,8 @@
 package com.herokuapp.mrndesign.matned.client.screen;
 
 import com.google.gwt.user.client.ui.RootPanel;
-import com.herokuapp.mrndesign.matned.client.model.Controller;
-import com.herokuapp.mrndesign.matned.client.model.ControllerImpl;
+import com.herokuapp.mrndesign.matned.client.model.Model;
+import com.herokuapp.mrndesign.matned.client.model.ModelImpl;
 import com.herokuapp.mrndesign.matned.client.screen.content.AboutContent;
 import com.herokuapp.mrndesign.matned.client.screen.content.ContactContent;
 import com.herokuapp.mrndesign.matned.client.screen.content.Content;
@@ -22,11 +22,11 @@ public class ContentManagerImpl implements ContentManager {
     private final Content initContent;
 
     public ContentManagerImpl() {
-        Controller controller = new ControllerImpl();
-        initContent = new VoteContent(controller);
+        Model model = new ModelImpl();
+        initContent = new VoteContent(model);
         contentMapByType.put(ContentType.VOTE, initContent);
         screen = new ScreenWidget(this, initContent);
-        controller.setScreen(screen);
+        model.setScreen(screen);
     }
 
     @Override

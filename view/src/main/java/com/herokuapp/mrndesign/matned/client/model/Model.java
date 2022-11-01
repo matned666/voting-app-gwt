@@ -3,15 +3,16 @@ package com.herokuapp.mrndesign.matned.client.model;
 import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
 import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
 import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
+import com.herokuapp.mrndesign.matned.client.model.utils.VoteObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VotePossibilityObserver;
 import com.herokuapp.mrndesign.matned.client.screen.Screen;
 
 import java.util.List;
 
 /**
- * Controller interface responsible for connection between frontend and backend
+ * Model interface responsible for connection between frontend and backend
  */
-public interface Controller {
+public interface Model {
 
     /**
      * Gets all {@link Voter} from repository
@@ -65,14 +66,14 @@ public interface Controller {
     void notifyVotePossibility(boolean legal);
 
     /**
-     * Adds dataGrid to the observation list {@link ControllerImpl#dataGrids}
+     * Adds dataGrid to the observation list {@link ModelImpl#dataGrids}
      *
      * @param dataGrid {@link DataGridObserver} interface
      */
     void addDataGridObserver(DataGridObserver dataGrid);
 
     /**
-     * Adds frontend element to the observation list {@link ControllerImpl#votePossibilityObservers}
+     * Adds frontend element to the observation list {@link ModelImpl#votePossibilityObservers}
      *
      * @param v {@link VotePossibilityObserver} interface
      */
@@ -113,6 +114,8 @@ public interface Controller {
      */
     void onGetVotersResultCallback(List<Voter> voters);
 
+    void onVoteResultCallback(VoteObserver voteObserver);
+
     /**
      * Requester result callback
      *
@@ -127,10 +130,12 @@ public interface Controller {
      */
     void onCandidateSaveResultCallback(Candidate candidate);
 
+    void onRemoveVoterCallback(Voter voter);
+
     /**
      * Requester result callback
      */
-    void onRemoveCallback();
+    void onRemoveCandidateCallback(Candidate candidate);
 
     /**
      * Server error callback

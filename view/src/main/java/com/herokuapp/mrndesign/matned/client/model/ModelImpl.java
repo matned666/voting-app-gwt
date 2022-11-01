@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class ControllerImpl implements Controller {
+public class ModelImpl implements Model {
     private static final Logger logger = java.util.logging.Logger.getLogger("ModelImpl");
 
     private final List<Voter> voterList;
@@ -26,7 +26,7 @@ public class ControllerImpl implements Controller {
     private final List<DataGridObserver> dataGrids = new ArrayList<>();
     private Screen screen;
 
-    public ControllerImpl() {
+    public ModelImpl() {
         requester = new HttpRequesterImpl(this);
         voterList = new ArrayList<>();
         candidateList = new ArrayList<>();
@@ -93,8 +93,6 @@ public class ControllerImpl implements Controller {
     public void vote(Candidate candidate) {
         voteObserver.setSelectedCandidate(candidate);
         requester.vote(voteObserver);
-        voteObserver.vote();
-        refreshData();
     }
 
     @Override
@@ -108,8 +106,6 @@ public class ControllerImpl implements Controller {
         }
         removeVoterVotes(voter);
         requester.removeVoter(voter);
-        voterList.remove(voter);
-        refreshData();
     }
 
     private void removeVoterVotes(Voter voter) {
@@ -122,8 +118,6 @@ public class ControllerImpl implements Controller {
     @Override
     public void removeCandidate(Candidate candidate) {
         requester.removeCandidate(candidate);
-        candidateList.remove(candidate);
-        refreshData();
     }
 
     @Override
@@ -136,6 +130,12 @@ public class ControllerImpl implements Controller {
     public void onGetVotersResultCallback(List<Voter> voters) {
         voterList.clear();
         voterList.addAll(voters);
+        refreshData();
+    }
+
+    @Override
+    public void onVoteResultCallback(VoteObserver voteObserver) {
+        voteObserver.vote();
         refreshData();
     }
 
@@ -153,7 +153,14 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void onRemoveCallback() {
+    public void onRemoveVoterCallback(Voter voter) {
+        voterList.remove(voter);
+        refreshData();
+    }
+
+    @Override
+    public void onRemoveCandidateCallback(Candidate candidate) {
+        candidateList.remove(candidate);
         refreshData();
     }
 

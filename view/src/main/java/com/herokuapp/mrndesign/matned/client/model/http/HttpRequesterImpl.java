@@ -5,7 +5,7 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
-import com.herokuapp.mrndesign.matned.client.model.Controller;
+import com.herokuapp.mrndesign.matned.client.model.Model;
 import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
 import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
 import com.herokuapp.mrndesign.matned.client.model.utils.VoteObserver;
@@ -20,10 +20,10 @@ import java.util.logging.Logger;
 public class HttpRequesterImpl implements Requester {
     private static final Logger logger = java.util.logging.Logger.getLogger("HttpRequesterImpl");
 
-    private final Controller controller;
+    private final Model model;
 
-    public HttpRequesterImpl(Controller controller) {
-        this.controller = controller;
+    public HttpRequesterImpl(Model model) {
+        this.model = model;
     }
 
     @Override
@@ -41,11 +41,11 @@ public class HttpRequesterImpl implements Requester {
                     String name = v.get("name").isString().stringValue();
                     String surname = v.get("surname").isString().stringValue();
                     logger.info("RESPONSE:" + id + " " + name + " " + surname);
-                    controller.onSaveVoterResultCallback(new Voter(id, name, surname));
+                    model.onSaveVoterResultCallback(new Voter(id, name, surname));
                 }
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    controller.onServerError("Save voter error");
+                    model.onServerError("Save voter error");
                 }
             });
         } catch (RequestException e) {
@@ -64,11 +64,11 @@ public class HttpRequesterImpl implements Requester {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
                     logger.info("VOTE GIVEN");
-
+                    model.onVoteResultCallback(voteObserver);
                 }
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    controller.onServerError("Vote error");
+                    model.onServerError("Vote error");
                 }
             });
         } catch (RequestException e) {
@@ -97,12 +97,12 @@ public class HttpRequesterImpl implements Requester {
                         logger.info("RESPONSE:" + id + " " + name + " " + surname);
                         voters.add(e);
                     }
-                    controller.onGetVotersResultCallback(voters);
+                    model.onGetVotersResultCallback(voters);
                 }
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    controller.onServerError("Get all voters error");
+                    model.onServerError("Get all voters error");
                 }
             });
         } catch (RequestException e) {
@@ -134,12 +134,12 @@ public class HttpRequesterImpl implements Requester {
                         logger.info("RESPONSE:" + id);
                         candidates.add(new Candidate(id, voterId, votes));
                     }
-                    controller.onGetCandidatesResultCallback(candidates);
+                    model.onGetCandidatesResultCallback(candidates);
                 }
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    controller.onServerError("Get all candidates error");
+                    model.onServerError("Get all candidates error");
                 }
             });
         } catch (RequestException e) {
@@ -166,12 +166,12 @@ public class HttpRequesterImpl implements Requester {
                         votes.add((long) vts.get(j).isNumber().doubleValue());
                     }
                     logger.info("RESPONSE:" + id);
-                    controller.onCandidateSaveResultCallback(new Candidate(id, voterId, votes));
+                    model.onCandidateSaveResultCallback(new Candidate(id, voterId, votes));
                 }
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    controller.onServerError("Save candidate error");
+                    model.onServerError("Save candidate error");
                 }
             });
         } catch (RequestException e) {
@@ -189,12 +189,12 @@ public class HttpRequesterImpl implements Requester {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
-                    controller.onRemoveCallback();
+                    model.onRemoveVoterCallback(voter);
                 }
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    controller.onServerError("Removing voter error");
+                    model.onServerError("Removing voter error");
                 }
             });
         } catch (RequestException e) {
@@ -211,12 +211,12 @@ public class HttpRequesterImpl implements Requester {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
-                    controller.onRemoveCallback();
+                    model.onRemoveCandidateCallback(candidate);
                 }
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    controller.onServerError("Removing candidate server error");
+                    model.onServerError("Removing candidate server error");
                 }
             });
         } catch (RequestException e) {
