@@ -15,4 +15,8 @@ public interface Screen {
     void setSelectedButton(ContentType contentType);
 
     void showErrorMessage(String message);
+
+    void startLoading();
+
+    void stopLoading();
 }

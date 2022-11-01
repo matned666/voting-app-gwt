@@ -148,4 +148,5 @@ public interface Model {
      * @param screen Screen
      */
     void setScreen(Screen screen);
+
 }

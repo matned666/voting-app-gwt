@@ -6,10 +6,15 @@ import com.google.gwt.user.client.ui.Widget;
 import com.herokuapp.mrndesign.matned.client.model.Model;
 import com.herokuapp.mrndesign.matned.client.screen.ContentType;
 import com.herokuapp.mrndesign.matned.client.screen.content.BaseContent;
+import com.herokuapp.mrndesign.matned.client.screen.widget.LoadingImage;
+
+import java.util.logging.Logger;
 
 public class VoteContent extends BaseContent {
+    private static final Logger logger = java.util.logging.Logger.getLogger("VoteContent");
 
     private final Model model;
+    private LoadingImage loadingImage;
 
     public VoteContent(Model model) {
         super(ContentType.VOTE);
@@ -18,12 +23,17 @@ public class VoteContent extends BaseContent {
         initHorizontalPanel();
         add(new AddVoterPanel(model));
         getElement().setClassName("content");
+        loadingImage = new LoadingImage();
+        logger.info("loading img: " + loadingImage.toString());
+        add(loadingImage);
     }
 
     private void initDescription() {
+        HorizontalPanel panel = new HorizontalPanel();
         HTML html = new HTML();
         html.setHTML("<h3>Voting application</h3>");
-        add(html);
+        panel.add(html);
+        add(panel);
     }
 
     private void initHorizontalPanel() {
@@ -37,4 +47,15 @@ public class VoteContent extends BaseContent {
     public Widget getWidget() {
         return this;
     }
+
+    @Override
+    public void startLoading() {
+        loadingImage.show();
+    }
+
+    @Override
+    public void stopLoading() {
+        loadingImage.hide();
+    }
+
 }

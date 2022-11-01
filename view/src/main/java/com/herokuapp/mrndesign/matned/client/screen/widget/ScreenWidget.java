@@ -71,4 +71,14 @@ public class ScreenWidget extends Composite implements Screen {
         Window.alert(message);
     }
 
+    @Override
+    public void startLoading() {
+        content.startLoading();
+    }
+
+    @Override
+    public void stopLoading() {
+        content.stopLoading();
+    }
+
 }

@@ -11,4 +11,8 @@ public interface Content {
     Widget getWidget();
 
     ContentType getContentType();
+
+    void startLoading();
+
+    void stopLoading();
 }

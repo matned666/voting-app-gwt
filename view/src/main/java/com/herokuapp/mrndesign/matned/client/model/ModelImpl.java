@@ -52,6 +52,7 @@ public class ModelImpl implements Model {
 
     @Override
     public void saveVoter(Voter voter) {
+        startLoading();
         requester.saveVoter(voter);
     }
 
@@ -60,12 +61,14 @@ public class ModelImpl implements Model {
         if (candidateList.contains(candidate)) {
             return;
         }
+        startLoading();
         requester.saveCandidate(candidate);
     }
 
     private void refreshData() {
         notifyVotePossibility(voteObserver.isVoteLegal());
         dataGrids.forEach(DataGridObserver::onDataChange);
+        screen.stopLoading();
     }
 
     @Override
@@ -81,22 +84,26 @@ public class ModelImpl implements Model {
 
     @Override
     public void addDataGridObserver(DataGridObserver dataGrid) {
+        startLoading();
         dataGrids.add(dataGrid);
     }
 
     @Override
     public void addVotePossibilityObserver(VotePossibilityObserver v) {
+        startLoading();
         votePossibilityObservers.add(v);
     }
 
     @Override
     public void vote(Candidate candidate) {
+        startLoading();
         voteObserver.setSelectedCandidate(candidate);
         requester.vote(voteObserver);
     }
 
     @Override
     public void removeVoter(Voter voter) {
+        startLoading();
         List<Candidate> candidatesToRemove = candidateList.stream()
                 .filter(c -> Objects.equals(c.getVoterId(), voter.getId()))
                 .collect(Collectors.toList());
@@ -117,6 +124,7 @@ public class ModelImpl implements Model {
 
     @Override
     public void removeCandidate(Candidate candidate) {
+        startLoading();
         requester.removeCandidate(candidate);
     }
 
@@ -167,11 +175,18 @@ public class ModelImpl implements Model {
     @Override
     public void onServerError(String message) {
         screen.showErrorMessage(message);
+        refreshData();
     }
 
     @Override
     public void setScreen(Screen screen) {
         this.screen = screen;
+    }
+
+    private void startLoading() {
+        if (screen != null) {
+            screen.startLoading();
+        }
     }
 
 }

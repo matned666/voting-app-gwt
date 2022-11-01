@@ -17,4 +17,11 @@ public abstract class BaseContent extends FlowPanel implements Content{
         return contentType;
     }
 
+    public void startLoading() {
+//        EMPTY
+    }
+
+    public void stopLoading() {
+//        EMPTY
+    }
 }

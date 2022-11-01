@@ -57,8 +57,7 @@ public class AppController {
      * @return saved voter taken from repository
      */
     @PostMapping(value = "/candidates/{voterId}")
-    public CandidateDTO saveNewCandidate(@PathVariable Long voterId) throws InterruptedException {
-//        TimeUnit.SECONDS.sleep(120);
+    public CandidateDTO saveNewCandidate(@PathVariable Long voterId) {
         return candidateService.add(voterId);
     }
 
