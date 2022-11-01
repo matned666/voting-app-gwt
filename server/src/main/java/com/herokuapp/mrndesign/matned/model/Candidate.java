@@ -16,6 +16,7 @@ public class Candidate {
     private Voter voter;
 
     @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "vote")
     private List<Voter> voters = new ArrayList<>();
 
     public Candidate() {

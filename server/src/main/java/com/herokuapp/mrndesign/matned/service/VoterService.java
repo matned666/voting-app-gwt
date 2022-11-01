@@ -10,7 +10,6 @@ import com.herokuapp.mrndesign.matned.service.exception.VoterNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,8 +26,6 @@ public class VoterService {
     public List<VoterDTO> findAll(){
         return convertEntityToUserDTOList(voterRepository.findAll());
     }
-
-    public VoterDTO findById(Long id) {return VoterDTO.apply(voterRepository.findById(id).orElseThrow(VoterNotFoundException::new));}
 
     public VoterDTO add(VoterDTO dto){
         return VoterDTO.apply(voterRepository.save(VoterDTO.applyNew(dto)));
@@ -49,12 +46,5 @@ public class VoterService {
         Candidate candidate = candidateRepository.findById(candidateDTO).orElseThrow(CandidateNotFoundException::new);
         candidate.getVoters().add(voter);
         candidateRepository.saveAndFlush(candidate);
-    }
-
-    public Boolean hasVoted(Long voterId) {
-        List<Candidate> candidates = candidateRepository.findAll();
-        return candidates.stream()
-                .flatMap(c -> c.getVoters().stream())
-                .anyMatch(voter -> Objects.equals(voter.getId(), voterId));
     }
 }

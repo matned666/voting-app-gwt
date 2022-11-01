@@ -26,6 +26,7 @@ public class ContentManagerImpl implements ContentManager {
         initContent = new VoteContent(model);
         contentMapByType.put(ContentType.VOTE, initContent);
         screen = new ScreenWidget(this, initContent);
+        model.setScreen(screen);
     }
 
     @Override

@@ -15,11 +15,6 @@ public class Voter implements Serializable {
     public Voter() {
     }
 
-    public Voter(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
-    }
-
     public Voter(Long id, String name, String surname) {
         this.name = name;
         this.surname = surname;

@@ -13,4 +13,6 @@ public interface Screen {
     Widget getWidget();
 
     void setSelectedButton(ContentType contentType);
+
+    void showErrorMessage(String message);
 }

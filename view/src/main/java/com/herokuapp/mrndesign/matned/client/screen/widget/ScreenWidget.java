@@ -1,5 +1,6 @@
 package com.herokuapp.mrndesign.matned.client.screen.widget;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -55,7 +56,7 @@ public class ScreenWidget extends Composite implements Screen {
     }
 
     @Override
-    public Widget getWidget(){
+    public Widget getWidget() {
         return this;
     }
 
@@ -63,6 +64,11 @@ public class ScreenWidget extends Composite implements Screen {
     public void setSelectedButton(ContentType contentType) {
         buttonsMap.values().forEach(MenuButton::deselect);
         buttonsMap.get(contentType).select();
+    }
+
+    @Override
+    public void showErrorMessage(String message) {
+        Window.alert(message);
     }
 
 }

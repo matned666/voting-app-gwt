@@ -42,7 +42,6 @@ public class HttpRequesterImpl implements Requester {
                     String surname = v.get("surname").isString().stringValue();
                     model.onSaveVoterResultCallback(new Voter(id, name, surname));
                 }
-
                 @Override
                 public void onError(Request request, Throwable exception) {
                 }
@@ -50,7 +49,6 @@ public class HttpRequesterImpl implements Requester {
         } catch (RequestException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.herokuapp.mrndesign.matned.client.model.http.Requester;
 import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VoteObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VotePossibilityObserver;
+import com.herokuapp.mrndesign.matned.client.screen.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class ModelImpl implements Model {
     private final VoteObserver voteObserver;
     private final List<VotePossibilityObserver> votePossibilityObservers = new ArrayList<>();
     private final List<DataGridObserver> dataGrids = new ArrayList<>();
+    private Screen screen;
 
     public ModelImpl() {
         requester = new HttpRequesterImpl(this);
@@ -104,9 +106,17 @@ public class ModelImpl implements Model {
             candidatesToRemove.forEach(this::removeCandidate);
             return;
         }
+        removeVoterVotes(voter);
         requester.removeVoter(voter);
         voterList.remove(voter);
         refreshData();
+    }
+
+    private void removeVoterVotes(Voter voter) {
+        candidateList.stream()
+                .filter(c -> c.getListOfVotesIds()
+                        .contains(voter.getId()))
+                .forEach(c -> c.getListOfVotesIds().remove(voter.getId()));
     }
 
     @Override
@@ -145,6 +155,16 @@ public class ModelImpl implements Model {
     @Override
     public void onRemoveCallback() {
         refreshData();
+    }
+
+    @Override
+    public void onServerError(String message) {
+        screen.showErrorMessage(message);
+    }
+
+    @Override
+    public void setScreen(Screen screen) {
+        this.screen = screen;
     }
 
 }

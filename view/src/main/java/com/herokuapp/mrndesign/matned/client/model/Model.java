@@ -4,6 +4,7 @@ import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
 import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
 import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VotePossibilityObserver;
+import com.herokuapp.mrndesign.matned.client.screen.Screen;
 
 import java.util.List;
 
@@ -134,5 +135,12 @@ public interface Model {
     /**
      * Server error callback
      */
-    void onServerError(String s);
+    void onServerError(String message);
+
+    /**
+     * Initial screen set - for communication with view purposes
+     *
+     * @param screen Screen
+     */
+    void setScreen(Screen screen);
 }

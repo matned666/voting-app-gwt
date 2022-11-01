@@ -1,12 +1,13 @@
 package com.herokuapp.mrndesign.matned.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "VOTER_ENTITY")
 public class Voter {
-
-    public static final String ROLE_NOT_FOUND = "Role not found";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +15,11 @@ public class Voter {
 
     private String name;
     private String surname;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "voters")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Candidate vote;
 
     public Voter() {
     }
@@ -41,6 +47,14 @@ public class Voter {
 
     public Long getId() {
         return id;
+    }
+
+    public Candidate getVote() {
+        return vote;
+    }
+
+    public void setVote(Candidate vote) {
+        this.vote = vote;
     }
 }
 

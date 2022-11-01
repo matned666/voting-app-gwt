@@ -7,10 +7,14 @@ public class VoterDTO {
     private Long id;
     private String name;
     private String surname;
+    private Long voteCandidateId;
 
 
     public static VoterDTO apply(Voter voter) {
-        VoterDTO dto = new VoterDTO(voter.getName(), voter.getSurname());
+        VoterDTO dto = new VoterDTO(voter.getName(), voter.getSurname(),
+                voter.getVote() != null
+                        ? voter.getVote().getId()
+                        : null);
         dto.id = voter.getId();
         return dto;
     }
@@ -22,9 +26,10 @@ public class VoterDTO {
     public VoterDTO() {
     }
 
-    public VoterDTO(String name, String surname) {
+    public VoterDTO(String name, String surname, Long voteCandidateId) {
         this.name = name;
         this.surname = surname;
+        this.voteCandidateId = voteCandidateId;
     }
 
     public String getName() {
@@ -45,5 +50,13 @@ public class VoterDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getVoteCandidateId() {
+        return voteCandidateId;
+    }
+
+    public void setVoteCandidateId(Long voteCandidateId) {
+        this.voteCandidateId = voteCandidateId;
     }
 }
