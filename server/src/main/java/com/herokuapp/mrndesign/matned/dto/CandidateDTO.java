@@ -3,6 +3,7 @@ package com.herokuapp.mrndesign.matned.dto;
 import com.herokuapp.mrndesign.matned.model.Candidate;
 import com.herokuapp.mrndesign.matned.model.Voter;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -60,5 +61,18 @@ public class CandidateDTO {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CandidateDTO)) return false;
+        CandidateDTO that = (CandidateDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(voterId, that.voterId) && Objects.equals(listOfVotesIds, that.listOfVotesIds);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, voterId, listOfVotesIds);
     }
 }

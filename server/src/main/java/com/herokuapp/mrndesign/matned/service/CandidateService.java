@@ -27,10 +27,6 @@ public class CandidateService {
         return convertCandidatesToDTOList(candidateRepository.findAll());
     }
 
-    public CandidateDTO findById(Long id) {
-        return CandidateDTO.apply(candidateRepository.findById(id).orElseThrow(VoterNotFoundException::new));
-    }
-
     public CandidateDTO add(Long voterId) {
         Voter v = voterRepository.findById(voterId).orElseThrow(VoterNotFoundException::new);
         return CandidateDTO.apply(candidateRepository.save(CandidateDTO.applyNew(v, new HashSet<>())));

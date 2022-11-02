@@ -45,6 +45,6 @@ public class VoterService {
         Voter voter = voterRepository.findById(voterId).orElseThrow(VoterNotFoundException::new);
         Candidate candidate = candidateRepository.findById(candidateDTO).orElseThrow(CandidateNotFoundException::new);
         candidate.getVoters().add(voter);
-        candidateRepository.saveAndFlush(candidate);
+        candidateRepository.save(candidate);
     }
 }

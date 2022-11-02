@@ -25,6 +25,13 @@ public class Voter {
         this.surname = surname;
     }
 
+    public Voter(Long id, String name, String surname, Candidate vote) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.vote = vote;
+    }
+
     public String getName() {
         return name;
     }

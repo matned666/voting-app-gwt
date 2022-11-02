@@ -27,6 +27,11 @@ public class Candidate {
         this.voters = voters;
     }
 
+    public Candidate(Long id, Set<Voter> voters) {
+        this.id = id;
+        this.voters = voters;
+    }
+
     public Set<Voter> getVoters() {
         return voters;
     }
