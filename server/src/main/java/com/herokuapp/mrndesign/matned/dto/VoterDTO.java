@@ -32,6 +32,13 @@ public class VoterDTO {
         this.voteCandidateId = voteCandidateId;
     }
 
+    public VoterDTO(Long id, String name, String surname, Long voteCandidateId) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.voteCandidateId = voteCandidateId;
+    }
+
     public String getName() {
         return name;
     }
@@ -59,4 +66,6 @@ public class VoterDTO {
     public void setVoteCandidateId(Long voteCandidateId) {
         this.voteCandidateId = voteCandidateId;
     }
+
+
 }

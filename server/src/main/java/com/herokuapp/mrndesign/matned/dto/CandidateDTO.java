@@ -36,6 +36,12 @@ public class CandidateDTO {
         this.listOfVotesIds = listOfVotesIds;
     }
 
+    public CandidateDTO(Long id, Long voterId, Set<Long> listOfVotesIds) {
+        this.id = id;
+        this.voterId = voterId;
+        this.listOfVotesIds = listOfVotesIds;
+    }
+
     public Long getVoterId() {
         return voterId;
     }
