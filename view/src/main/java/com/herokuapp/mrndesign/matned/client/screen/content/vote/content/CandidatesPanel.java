@@ -7,9 +7,9 @@ import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.view.client.ListDataProvider;
 import com.herokuapp.mrndesign.matned.client.model.Model;
-import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
-import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
-import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
+import com.herokuapp.mrndesign.matned.client.model.mold.Candidate;
+import com.herokuapp.mrndesign.matned.client.model.mold.Voter;
+import com.herokuapp.mrndesign.matned.client.model.utils.DataObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VotePossibilityObserver;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class CandidatesPanel extends DataGrid<Candidate> implements DataGridObserver {
+public class CandidatesPanel extends DataGrid<Candidate> implements DataObserver {
     private static final Logger logger = java.util.logging.Logger.getLogger("CandidatesPanel");
 
     private final Model model;

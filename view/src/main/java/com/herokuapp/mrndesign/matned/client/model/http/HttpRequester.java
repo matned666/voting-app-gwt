@@ -6,23 +6,25 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.herokuapp.mrndesign.matned.client.model.Model;
-import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
-import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
+import com.herokuapp.mrndesign.matned.client.model.mold.Candidate;
+import com.herokuapp.mrndesign.matned.client.model.mold.Voter;
 import com.herokuapp.mrndesign.matned.client.model.utils.VoteObserver;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 /**
  * Http requests handler - special for GWT framework
  */
-public class HttpRequesterImpl implements Requester {
+public class HttpRequester implements Requester {
     private static final Logger logger = java.util.logging.Logger.getLogger("HttpRequesterImpl");
 
     private final Model model;
 
-    public HttpRequesterImpl(Model model) {
+    public HttpRequester(Model model) {
         this.model = model;
     }
 
@@ -54,7 +56,8 @@ public class HttpRequesterImpl implements Requester {
     }
 
     @Override
-    public void vote(VoteObserver voteObserver) {
+    public void vote() {
+        VoteObserver voteObserver = VoteObserver.getInstance(model);
         String url = "http://localhost:8080/giveVote/" + voteObserver.getSelectedVoter().getId() + "/" + voteObserver.getSelectedCandidate().getId();
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, url);
         requestBuilder.setHeader("Content-Type", "application/json; charset=utf8");
@@ -123,7 +126,7 @@ public class HttpRequesterImpl implements Requester {
                     JSONValue value = JSONParser.parseStrict(response.getText());
                     JSONArray obj = value.isArray();
                     for (int i = 0; i < obj.size(); i++) {
-                        List<Long> votes = new ArrayList<>();
+                        Set<Long> votes = new HashSet<>();
                         JSONObject v = obj.get(i).isObject();
                         Long id = (long) v.get("id").isNumber().doubleValue();
                         Long voterId = (long) v.get("voterId").isNumber().doubleValue();
@@ -158,7 +161,7 @@ public class HttpRequesterImpl implements Requester {
                 public void onResponseReceived(Request request, Response response) {
                     JSONValue value = JSONParser.parseStrict(response.getText());
                     JSONObject v = value.isObject();
-                    List<Long> votes = new ArrayList<>();
+                    Set<Long> votes = new HashSet<>();
                     Long id = (long) v.get("id").isNumber().doubleValue();
                     Long voterId = (long) v.get("voterId").isNumber().doubleValue();
                     JSONArray vts = v.get("listOfVotesIds").isArray();

@@ -1,8 +1,7 @@
 package com.herokuapp.mrndesign.matned.client.model.http;
 
-import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
-import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
-import com.herokuapp.mrndesign.matned.client.model.utils.VoteObserver;
+import com.herokuapp.mrndesign.matned.client.model.mold.Candidate;
+import com.herokuapp.mrndesign.matned.client.model.mold.Voter;
 
 /**
  * Interface responsible for requests from repository
@@ -18,10 +17,8 @@ public interface Requester {
 
     /**
      * ROST request to <a href="http://localhost:8080/giveVote/0/0">http://localhost:8080/giveVote/voterId/candidateId</a>
-     *
-     * @param voteObserver
      */
-    void vote(VoteObserver voteObserver);
+    void vote();
 
     /**
      * GET request to <a href="http://localhost:8080/voters">http://localhost:8080/voters</a>

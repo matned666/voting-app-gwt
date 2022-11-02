@@ -1,4 +1,4 @@
-package com.herokuapp.mrndesign.matned.client.model.dto;
+package com.herokuapp.mrndesign.matned.client.model.mold;
 
 import java.io.Serializable;
 import java.util.Objects;

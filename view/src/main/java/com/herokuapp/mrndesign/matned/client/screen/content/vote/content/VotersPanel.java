@@ -9,17 +9,17 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.herokuapp.mrndesign.matned.client.model.Model;
-import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
-import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
-import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
+import com.herokuapp.mrndesign.matned.client.model.mold.Candidate;
+import com.herokuapp.mrndesign.matned.client.model.mold.Voter;
+import com.herokuapp.mrndesign.matned.client.model.utils.DataObserver;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class VotersPanel extends DataGrid<Voter> implements DataGridObserver {
+public class VotersPanel extends DataGrid<Voter> implements DataObserver {
     private final ListDataProvider<Voter> dataProvider;
     Logger logger = java.util.logging.Logger.getLogger("VotersPanel");
     private final Model model;
@@ -107,7 +107,7 @@ public class VotersPanel extends DataGrid<Voter> implements DataGridObserver {
         candidateColumn.setFieldUpdater((index, voter, value) -> {
             Candidate c = new Candidate();
             c.setVoterId(voter.getId());
-            c.setListOfVotesIds(new ArrayList<>());
+            c.setListOfVotesIds(new HashSet<>());
             model.saveCandidate(c);
         });
         addColumn(candidateColumn, "Be candidate");

@@ -1,8 +1,8 @@
-package com.herokuapp.mrndesign.matned.client.model.dto;
+package com.herokuapp.mrndesign.matned.client.model.mold;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Mirror View object for CandidateDTO on a server side
@@ -11,17 +11,17 @@ public class Candidate implements Serializable {
 
     private Long id;
     private Long voterId;
-    private List<Long> listOfVotesIds;
+    private Set<Long> listOfVotesIds;
 
     public Candidate() {
     }
 
-    public Candidate(Long voterId, List<Long> listOfVotesIds) {
+    public Candidate(Long voterId, Set<Long> listOfVotesIds) {
         this.voterId = voterId;
         this.listOfVotesIds = listOfVotesIds;
     }
 
-    public Candidate(Long id, Long voterId, List<Long> listOfVotesIds) {
+    public Candidate(Long id, Long voterId, Set<Long> listOfVotesIds) {
         this.id = id;
         this.voterId = voterId;
         this.listOfVotesIds = listOfVotesIds;
@@ -35,11 +35,11 @@ public class Candidate implements Serializable {
         this.voterId = voterId;
     }
 
-    public List<Long> getListOfVotesIds() {
+    public Set<Long> getListOfVotesIds() {
         return listOfVotesIds;
     }
 
-    public void setListOfVotesIds(List<Long> listOfVotesIds) {
+    public void setListOfVotesIds(Set<Long> listOfVotesIds) {
         this.listOfVotesIds = listOfVotesIds;
     }
 

@@ -1,10 +1,10 @@
 package com.herokuapp.mrndesign.matned.client.model;
 
-import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
-import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
-import com.herokuapp.mrndesign.matned.client.model.http.HttpRequesterImpl;
+import com.herokuapp.mrndesign.matned.client.model.http.HttpRequester;
 import com.herokuapp.mrndesign.matned.client.model.http.Requester;
-import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
+import com.herokuapp.mrndesign.matned.client.model.mold.Candidate;
+import com.herokuapp.mrndesign.matned.client.model.mold.Voter;
+import com.herokuapp.mrndesign.matned.client.model.utils.DataObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VoteObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VotePossibilityObserver;
 import com.herokuapp.mrndesign.matned.client.screen.Screen;
@@ -21,18 +21,16 @@ public class ModelImpl implements Model {
     private final List<Voter> voterList;
     private final List<Candidate> candidateList;
     private final Requester requester;
-    private final VoteObserver voteObserver;
     private final List<VotePossibilityObserver> votePossibilityObservers = new ArrayList<>();
-    private final List<DataGridObserver> dataGrids = new ArrayList<>();
+    private final List<DataObserver> dataGrids = new ArrayList<>();
     private Screen screen;
 
     public ModelImpl() {
-        requester = new HttpRequesterImpl(this);
+        requester = new HttpRequester(this);
         voterList = new ArrayList<>();
         candidateList = new ArrayList<>();
         requester.requestVoters();
         requester.requestCandidates();
-        voteObserver = new VoteObserver(this);
     }
 
     @Override
@@ -66,14 +64,14 @@ public class ModelImpl implements Model {
     }
 
     private void refreshData() {
-        notifyVotePossibility(voteObserver.isVoteLegal());
-        dataGrids.forEach(DataGridObserver::onDataChange);
+        notifyVotePossibility(VoteObserver.getInstance(this).isVoteLegal());
+        dataGrids.forEach(DataObserver::onDataChange);
         screen.stopLoading();
     }
 
     @Override
     public void setSelectedVoter(Voter selected) {
-        voteObserver.setSelectedVoter(selected);
+        VoteObserver.getInstance(this).setSelectedVoter(selected);
         refreshData();
     }
 
@@ -83,7 +81,7 @@ public class ModelImpl implements Model {
     }
 
     @Override
-    public void addDataGridObserver(DataGridObserver dataGrid) {
+    public void addDataGridObserver(DataObserver dataGrid) {
         startLoading();
         dataGrids.add(dataGrid);
     }
@@ -97,8 +95,8 @@ public class ModelImpl implements Model {
     @Override
     public void vote(Candidate candidate) {
         startLoading();
-        voteObserver.setSelectedCandidate(candidate);
-        requester.vote(voteObserver);
+        VoteObserver.getInstance(this).setSelectedCandidate(candidate);
+        requester.vote();
     }
 
     @Override

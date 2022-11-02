@@ -1,8 +1,8 @@
 package com.herokuapp.mrndesign.matned.client.model;
 
-import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
-import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
-import com.herokuapp.mrndesign.matned.client.model.utils.DataGridObserver;
+import com.herokuapp.mrndesign.matned.client.model.mold.Candidate;
+import com.herokuapp.mrndesign.matned.client.model.mold.Voter;
+import com.herokuapp.mrndesign.matned.client.model.utils.DataObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VoteObserver;
 import com.herokuapp.mrndesign.matned.client.model.utils.VotePossibilityObserver;
 import com.herokuapp.mrndesign.matned.client.screen.Screen;
@@ -68,9 +68,9 @@ public interface Model {
     /**
      * Adds dataGrid to the observation list {@link ModelImpl#dataGrids}
      *
-     * @param dataGrid {@link DataGridObserver} interface
+     * @param dataGrid {@link DataObserver} interface
      */
-    void addDataGridObserver(DataGridObserver dataGrid);
+    void addDataGridObserver(DataObserver dataGrid);
 
     /**
      * Adds frontend element to the observation list {@link ModelImpl#votePossibilityObservers}

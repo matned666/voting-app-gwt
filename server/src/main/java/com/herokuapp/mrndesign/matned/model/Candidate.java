@@ -1,8 +1,8 @@
 package com.herokuapp.mrndesign.matned.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "CANDIDATE_ENTITY")
@@ -17,17 +17,17 @@ public class Candidate {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "vote")
-    private List<Voter> voters = new ArrayList<>();
+    private Set<Voter> voters = new HashSet<>();
 
     public Candidate() {
     }
 
-    public Candidate(Voter voter, List<Voter> voters) {
+    public Candidate(Voter voter, Set<Voter> voters) {
         this.voter = voter;
         this.voters = voters;
     }
 
-    public List<Voter> getVoters() {
+    public Set<Voter> getVoters() {
         return voters;
     }
 

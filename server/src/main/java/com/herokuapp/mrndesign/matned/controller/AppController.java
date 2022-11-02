@@ -26,7 +26,8 @@ public class AppController {
      * @return all voters as {@link VoterDTO} List
      */
     @GetMapping(value = "/voters")
-    public List<VoterDTO> getAllVoters() {
+    public List<VoterDTO> getAllVoters() throws InterruptedException {
+//        TimeUnit.SECONDS.sleep(2);
         return voterService.findAll();
     }
 
@@ -34,7 +35,8 @@ public class AppController {
      * @return all candidates as {@link CandidateDTO} List
      */
     @GetMapping(value = "/candidates")
-    public List<CandidateDTO> getAllCandidates() {
+    public List<CandidateDTO> getAllCandidates() throws InterruptedException {
+//        TimeUnit.SECONDS.sleep(2);
         return candidateService.findAll();
     }
 
@@ -45,7 +47,8 @@ public class AppController {
      * @return saved voter taken from repository
      */
     @PostMapping(value = "/voters")
-    public VoterDTO saveVoter(@RequestBody VoterDTO voterDTO) {
+    public VoterDTO saveVoter(@RequestBody VoterDTO voterDTO) throws InterruptedException {
+//        TimeUnit.SECONDS.sleep(2);
         return voterService.add(voterDTO);
     }
 
@@ -57,7 +60,8 @@ public class AppController {
      * @return saved voter taken from repository
      */
     @PostMapping(value = "/candidates/{voterId}")
-    public CandidateDTO saveNewCandidate(@PathVariable Long voterId) {
+    public CandidateDTO saveNewCandidate(@PathVariable Long voterId) throws InterruptedException {
+//        TimeUnit.SECONDS.sleep(2);
         return candidateService.add(voterId);
     }
 
@@ -68,7 +72,8 @@ public class AppController {
      * @param candidateId
      */
     @PostMapping(value = "/giveVote/{voterId}/{candidateId}")
-    public void vote(@PathVariable Long voterId, @PathVariable Long candidateId) {
+    public void vote(@PathVariable Long voterId, @PathVariable Long candidateId) throws InterruptedException {
+//        TimeUnit.SECONDS.sleep(2);
         voterService.vote(candidateId, voterId);
     }
 
@@ -78,7 +83,8 @@ public class AppController {
      * @param voterId
      */
     @DeleteMapping(value = "/voter/{voterId}")
-    public void deleteVoter(@PathVariable Long voterId) {
+    public void deleteVoter(@PathVariable Long voterId) throws InterruptedException {
+//        TimeUnit.SECONDS.sleep(2);
         voterService.deleteVoter(voterId);
     }
 
@@ -88,7 +94,8 @@ public class AppController {
      * @param candidateId
      */
     @DeleteMapping(value = "/candidate/{candidateId}")
-    public void deleteCandidate(@PathVariable Long candidateId) {
+    public void deleteCandidate(@PathVariable Long candidateId) throws InterruptedException {
+//        TimeUnit.SECONDS.sleep(2);
         candidateService.deleteCandidate(candidateId);
     }
 

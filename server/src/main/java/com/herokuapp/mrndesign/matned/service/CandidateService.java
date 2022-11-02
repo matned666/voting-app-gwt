@@ -8,7 +8,7 @@ import com.herokuapp.mrndesign.matned.repository.VoterRepository;
 import com.herokuapp.mrndesign.matned.service.exception.VoterNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,15 +23,17 @@ public class CandidateService {
         this.voterRepository = voterRepository;
     }
 
-    public List<CandidateDTO> findAll(){
+    public List<CandidateDTO> findAll() {
         return convertCandidatesToDTOList(candidateRepository.findAll());
     }
 
-    public CandidateDTO findById(Long id) {return CandidateDTO.apply(candidateRepository.findById(id).orElseThrow(VoterNotFoundException::new));}
+    public CandidateDTO findById(Long id) {
+        return CandidateDTO.apply(candidateRepository.findById(id).orElseThrow(VoterNotFoundException::new));
+    }
 
     public CandidateDTO add(Long voterId) {
         Voter v = voterRepository.findById(voterId).orElseThrow(VoterNotFoundException::new);
-        return CandidateDTO.apply(candidateRepository.save(CandidateDTO.applyNew(v, new ArrayList<>())));
+        return CandidateDTO.apply(candidateRepository.save(CandidateDTO.applyNew(v, new HashSet<>())));
     }
 
     public void deleteCandidate(Long id) {

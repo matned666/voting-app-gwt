@@ -3,7 +3,7 @@ package com.herokuapp.mrndesign.matned.dto;
 import com.herokuapp.mrndesign.matned.model.Candidate;
 import com.herokuapp.mrndesign.matned.model.Voter;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CandidateDTO {
@@ -12,26 +12,26 @@ public class CandidateDTO {
 
     private Long voterId;
 
-    private List<Long> listOfVotesIds;
+    private Set<Long> listOfVotesIds;
 
     public static CandidateDTO apply(Candidate entity) {
         CandidateDTO dto = new CandidateDTO(entity.getVoter().getId(),
                 entity.getVoters()
                         .stream()
                         .map(Voter::getId)
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toSet()));
         dto.id = entity.getId();
         return dto;
     }
 
-    public static Candidate applyNew(Voter v, List<Voter> votes) {
+    public static Candidate applyNew(Voter v, Set<Voter> votes) {
         return new Candidate(v, votes);
     }
 
     public CandidateDTO() {
     }
 
-    public CandidateDTO(Long voterId, List<Long> listOfVotesIds) {
+    public CandidateDTO(Long voterId, Set<Long> listOfVotesIds) {
         this.voterId = voterId;
         this.listOfVotesIds = listOfVotesIds;
     }
@@ -44,11 +44,11 @@ public class CandidateDTO {
         this.voterId = voterId;
     }
 
-    public List<Long> getListOfVotesIds() {
+    public Set<Long> getListOfVotesIds() {
         return listOfVotesIds;
     }
 
-    public void setListOfVotesIds(List<Long> listOfVotesIds) {
+    public void setListOfVotesIds(Set<Long> listOfVotesIds) {
         this.listOfVotesIds = listOfVotesIds;
     }
 

@@ -4,7 +4,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.herokuapp.mrndesign.matned.client.model.Model;
-import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
+import com.herokuapp.mrndesign.matned.client.model.mold.Voter;
 
 import java.util.logging.Logger;
 

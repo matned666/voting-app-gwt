@@ -1,11 +1,24 @@
 package com.herokuapp.mrndesign.matned.client.model.utils;
 
 import com.herokuapp.mrndesign.matned.client.model.Model;
-import com.herokuapp.mrndesign.matned.client.model.dto.Candidate;
-import com.herokuapp.mrndesign.matned.client.model.dto.Voter;
+import com.herokuapp.mrndesign.matned.client.model.mold.Candidate;
+import com.herokuapp.mrndesign.matned.client.model.mold.Voter;
 import io.reactivex.subjects.PublishSubject;
 
 public class VoteObserver {
+
+    private volatile static VoteObserver instance;
+
+    public static VoteObserver getInstance(Model model) {
+        if (instance == null) {
+            synchronized (VoteObserver.class) {
+                if (instance == null) {
+                    instance = new VoteObserver(model);
+                }
+            }
+        }
+        return instance;
+    }
 
     private Voter selectedVoter;
     private Candidate selectedCandidate;
@@ -14,7 +27,7 @@ public class VoteObserver {
 
     private final Model model;
 
-    public VoteObserver(Model model) {
+    private VoteObserver(Model model) {
         this.model = model;
         onSelectionCorrect.subscribe(model::notifyVotePossibility);
     }
